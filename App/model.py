@@ -36,12 +36,54 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+    """"
+    se genera un catalogo con dos listas,
+    se utilizó array list en vez de single linked porque hasta el momento 
+    solo se va a acceder a los elementos por posición lo que resulta o(1) con array 
+    y o(n) con single linked
+
+    """
+    catalog = {'obras': None,
+               'artistas': None,
+               }
+
+    catalog['artistas'] = lt.newList('ARRAY_LIST')
+    catalog['obras'] = lt.newList('ARRAY_LIST')
+
+    return catalog
 
 # Funciones para agregar informacion al catalogo
+
+def addObra(catalog, obra):
+    # Se adiciona la obra a la lista de obras
+    lt.addLast(catalog['obras'], obra)
+
+
+def addArtist(catalog, artist):
+    """
+    Adiciona un artista a lista de artistas, 
+    """
+    lt.addLast(catalog['artistas'], artist)
+
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
+##TODO DANI!!!!!#
+# FUNCIÓN PARA IMPRIMIR ULTIMOS TRES ELEMENTOS DE ARTISTAS Y OBRAS#
+#EJEMPLO DEL LAB DE LISTAS, en nuestro caso no entrega los mejores libros si no los ultimos tres elementos,
+#  los paramteros podrían ser (catalog,3) y se podría llamar get last 3 elements##
+
+def getlastxelements(catalog,category,number):
+    """
+    Retorna los 3 ultimos elementos dado un catalogo (catalog), categoría ("artistas" o  "obras") y una cantidad de posiciones (3)
+    tienes que generar una lista donde almacenes los elementos a los que accedes por posición
+    ideas:puedes usar get.element para obtener el elemento y size para obtener ultimas tres posiciones
+    """
+    lastelements= None
+    return lastelements
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

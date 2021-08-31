@@ -36,10 +36,28 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("1-Cargar información en el catálogo")
+    print("2-Listar cronológicamente los artistas")
+    print("4-Listar cronológicamente las adquisiciones ")
+    print("2-Clasificar las obras de un artista por técnica")
+    print("2-Clasificar las obras por la nacionalidad de sus creadores ")
+    print("7-Transportar obras de un departamento ")
+    print("8-Proponer una nueva exposición en el museo ")
+    print("0-Salir ")
+ 
+    
+def initCatalog():
+    """
+    Inicializa el catalogo de libros
+    """
+    return controller.initCatalog()
 
-catalog = None
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
+    #TODO#
 
 """
 Menu principal
@@ -49,8 +67,16 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
-    elif int(inputs[0]) == 2:
+        catalog = initCatalog()
+        loadData(catalog)
+        print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
+        print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
+        #TODO dani#
+        #IMPRIMIR ULTIMOS TRES ELEMENTOS DE ARTISTAS Y OBRAS#
+        print('Ultimos 3 Artistas cargados:...........' )
+        print('Ultimas 3 Obras cargadas:...........' )
+    elif int(inputs[0]) >= 2:
+        print ("Lo sentimos, Requerimiento no disponible todavía")
         pass
 
     else:
