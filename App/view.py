@@ -35,7 +35,7 @@ operación solicitada
 """
 
 def printMenu():
-    print("Bienvenido")
+    print("\nBienvenido")
     print("1-Cargar información en el catálogo")
     print("2-Listar cronológicamente los artistas")
     print("4-Listar cronológicamente las adquisiciones ")
@@ -57,8 +57,31 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     return controller.loadData(catalog)
-    
 
+def printartists(artistas):
+    size = lt.size(artistas)
+    if size:
+        for artista in lt.iterator(artistas):
+            print('ID Constituente: ' + artista["ConstituentID"] + '  Nombre: ' +
+                  artista["DisplayName"] + ' Bio: ' + artista["ArtistBio"]+ 
+                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"] +
+                  ' Fecha de inicio/Fecha fin: '+ artista["BeginDate"]+'/'+ artista["EndDate"]+
+                 " Wiki QID: " +artista["Wiki QID"]+ ' ULAN: '+artista["ULAN"])
+    else:
+        print('No se han cargado artistas')
+
+def printobras(obras):
+    size = lt.size(obras)
+    if size:
+        for obra in lt.iterator(obras):
+            print('ID: ' + obra["ObjectID"] + ' Título: ' + obra["Title"] + 
+            ' ID Constituente: ' + obra["ConstituentID"] +  ' Fecha: ' + obra["Date"] +
+             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] + 
+             ' CreditLine: ' + obra["CreditLine"] + 'Número de Acceso' + obra["AccessionNumber"] +
+             ' Clasificación' + obra["Classification"] + ' Departamento: ' + obra["Department"] +
+             'Fecha de Adquisción' + obra["DateAcquired"])       
+    else:
+        print('No se han cargado obras')
 """
 Menu principal
 """
@@ -71,8 +94,11 @@ while True:
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
-        print('Ultimos 3 Artistas cargados: ' + str(controller.get3lastartists(catalog)))
-        print('Ultimas 3 Obras cargadas:' + str(controller.get3lastobras(catalog)))
+        print('Ultimos 3 Artistas cargados: ')
+        printartists(controller.get3lastartists(catalog))
+        print('\nUltimas 3 Obras cargadas:')
+        printobras(controller.get3lastobras(catalog))
+        
     elif int(inputs[0]) >= 2:
         print ("Lo sentimos, Requerimiento no disponible todavía")
         pass
