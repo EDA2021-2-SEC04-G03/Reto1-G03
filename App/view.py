@@ -56,8 +56,8 @@ def loadData(catalog):
     """
     Carga los libros en la estructura de datos
     """
-    controller.loadData(catalog)
-    #TODO#
+    return controller.loadData(catalog)
+    
 
 """
 Menu principal
@@ -71,10 +71,8 @@ while True:
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
-        #TODO dani#
-        #IMPRIMIR ULTIMOS TRES ELEMENTOS DE ARTISTAS Y OBRAS#
-        print('Ultimos 3 Artistas cargados:...........' )
-        print('Ultimas 3 Obras cargadas:...........' )
+        print('Ultimos 3 Artistas cargados: ' + str(controller.get3lastartists(catalog)))
+        print('Ultimas 3 Obras cargadas:' + str(controller.get3lastobras(catalog)))
     elif int(inputs[0]) >= 2:
         print ("Lo sentimos, Requerimiento no disponible todavía")
         pass

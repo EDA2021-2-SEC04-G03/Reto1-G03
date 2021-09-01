@@ -60,22 +60,18 @@ def loadObras(catalog):
 
 # Funciones de consulta sobre el catálogo
 
-def get3lastartists(catalog, number):
-#TODO DANI#
+def get3lastartists(catalog):
 # FUNCIÓN PARA IMPRIMIR ULTIMOS TRES ELEMENTOS DE ARTISTAS #
-#aquí usas la función creada en module y luego esta funcion de controler la usas para imprimir en view#
     """
     Retorna los ultimos 3 artistas cargados
     """
-    lastsartists = model.get3last(catalog,"artistas", 3)
+    lastsartists = model.getlastxelements(catalog,"artistas", 3)
     return lastsartists
 
-def get3lastobras(catalog, number):
-#TODO DANI#
+def get3lastobras(catalog):
 # FUNCIÓN PARA IMPRIMIR ULTIMOS TRES ELEMENTOS DE OBRAS#
-#aquí usas la función creada en module y luego esta funcion de controler la usas para imprimir en view#
     """
     Retorna las ultimos 3 obras cargadas
     """
-    lastsobras = model.get3last(catalog,"obras", 3)
+    lastsobras = model.getlastxelements(catalog,"obras", 3)
     return lastsobras

@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -81,9 +82,14 @@ def getlastxelements(catalog,category,number):
     tienes que generar una lista donde almacenes los elementos a los que accedes por posición
     ideas:puedes usar get.element para obtener el elemento y size para obtener ultimas tres posiciones
     """
-    lastelements= None
+    elements= catalog[category]
+    lastelements= lt.newList("ARRAY_LIST")
+    tam1= lt.size(elements)
+    tam2=tam1-number
+    for pos in range (tam2,tam1):
+        new=lt.getElement (elements,pos)
+        lt.addLast (lastelements,new)
     return lastelements
-
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
