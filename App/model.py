@@ -71,10 +71,7 @@ def addArtist(catalog, artist):
 # Funciones para creacion de datos
 
 # Funciones de consulta
-##TODO DANI!!!!!#
-# FUNCIÓN PARA IMPRIMIR ULTIMOS TRES ELEMENTOS DE ARTISTAS Y OBRAS#
-#EJEMPLO DEL LAB DE LISTAS, en nuestro caso no entrega los mejores libros si no los ultimos tres elementos,
-#  los paramteros podrían ser (catalog,3) y se podría llamar get last 3 elements##
+
 
 def getlastxelements(catalog,category,number):
     """
