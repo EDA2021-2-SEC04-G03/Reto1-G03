@@ -49,15 +49,17 @@ def newCatalog():
                'artistas': None,
                }
 
-    catalog['artistas'] = lt.newList('ARRAY_LIST')
-    catalog['obras'] = lt.newList('ARRAY_LIST')
+    catalog['artistas'] = lt.newList('ARRAY_LIST', cmpfunction=compareArtistId)
+    catalog['obras'] = lt.newList('ARRAY_LIST', cmpfunction=compareObraId)
 
     return catalog
 
 # Funciones para agregar informacion al catalogo
 
 def addObra(catalog, obra):
-    # Se adiciona la obra a la lista de obras
+    """
+    Se adiciona la obra a la lista de obras
+    """
     lt.addLast(catalog['obras'], obra)
 
 
@@ -70,10 +72,10 @@ def addArtist(catalog, artist):
 
 # Funciones para creacion de datos
 
+#TODO hacer funciones para agregar datos
 # Funciones de consulta
 
-
-def getlastxelements(catalog,category,number):
+def getLastxElements(catalog,category,number):
     """
     Retorna los 3 ultimos elementos dado un catalogo (catalog), categoría ("artistas" o  "obras") y una cantidad de posiciones (3)
     tienes que generar una lista donde almacenes los elementos a los que accedes por posición
@@ -89,5 +91,20 @@ def getlastxelements(catalog,category,number):
     return lastelements
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def compareArtistId(artist1, artist2):
+    if artist1["ConstituentID"] < artist2["ConstituentID"]:
+        return -1 
+    elif artist1["ConstituentID"] == artist2["ConstituentID"]:
+        return 0
+    else: 
+        return 1
+def compareObraId(obra1, obra2):
+    if obra1["ObjectID"] < obra2["ObjectID"]:
+        return -1 
+    elif obra1["ObjectID"] == obra2["ObjectID"]:
+        return 0
+    else: 
+        return 1
 
 # Funciones de ordenamiento

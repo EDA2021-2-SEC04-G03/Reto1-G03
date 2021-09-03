@@ -45,7 +45,6 @@ def printMenu():
     print("8-Proponer una nueva exposición en el museo ")
     print("0-Salir ")
  
-    
 def initCatalog():
     """
     Inicializa el catalogo de libros
@@ -58,6 +57,7 @@ def loadData(catalog):
     """
     return controller.loadData(catalog)
 
+#Funciones para imprimir#
 def printartists(artistas):
     size = lt.size(artistas)
     if size:
@@ -74,7 +74,7 @@ def printobras(obras):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
-            print('ID: ' + obra["ObjectID"] + ' Título: ' + obra["Title"] + 
+            print('ID: ' + obra[] + ' Título: ' + obra["Title"] + 
             ' ID Constituente: ' + obra["ConstituentID"] +  ' Fecha: ' + obra["Date"] +
              ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] + 
              ' CreditLine: ' + obra["CreditLine"] + 'Número de Acceso' + obra["AccessionNumber"] +
