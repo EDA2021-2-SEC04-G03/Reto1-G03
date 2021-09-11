@@ -31,26 +31,17 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
-"""
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
-"""
+
 
 # Construccion de modelos
-def newCatalog():
-    """"
-    se genera un catalogo con dos listas,
-    se utilizó array list en vez de single linked porque hasta el momento 
-    solo se va a acceder a los elementos por posición lo que resulta o(1) con array 
-    y o(n) con single linked
+def newCatalog(estructura):
 
-    """
     catalog = {'obras': None,
                'artistas': None,
                }
 
-    catalog['artistas'] = lt.newList('ARRAY_LIST', cmpfunction=compareArtistId)
-    catalog['obras'] = lt.newList('ARRAY_LIST', cmpfunction=compareObraId)
+    catalog['artistas'] = lt.newList(estructura, cmpfunction=compareArtistId)
+    catalog['obras'] = lt.newList(estructura, cmpfunction=compareObraId)
 
     return catalog
 
@@ -85,7 +76,7 @@ def getLastxElements(catalog,category,number):
     lastelements= lt.newList("ARRAY_LIST")
     tam1= lt.size(elements)
     tam2=tam1-number
-    for pos in range (tam2,tam1):
+    for pos in range (tam2,tam1+1):
         new=lt.getElement (elements,pos)
         lt.addLast (lastelements,new)
     return lastelements
@@ -106,5 +97,17 @@ def compareObraId(obra1, obra2):
         return 0
     else: 
         return 1
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    """
+Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
+Args:
+artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired' 
+"""
+    if artwork1['DateAcquired'] < artwork2['DateAcquired']:
+        return True
+    else: 
+        return False
+
 
 # Funciones de ordenamiento

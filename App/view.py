@@ -36,7 +36,7 @@ operación solicitada
 
 def printMenu():
     print("\nBienvenido")
-    print("1-Cargar información en el catálogo")
+    print("1-Cargar información en el catálogo, y escoger el tipo de estructura")
     print("2-Listar cronológicamente los artistas")
     print("4-Listar cronológicamente las adquisiciones ")
     print("2-Clasificar las obras de un artista por técnica")
@@ -74,7 +74,7 @@ def printobras(obras):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
-            print('ID: ' + obra[] + ' Título: ' + obra["Title"] + 
+            print('ID: ' + obra["ObjectID"] + ' Título: ' + obra["Title"] + 
             ' ID Constituente: ' + obra["ConstituentID"] +  ' Fecha: ' + obra["Date"] +
              ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] + 
              ' CreditLine: ' + obra["CreditLine"] + 'Número de Acceso' + obra["AccessionNumber"] +
@@ -89,8 +89,16 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        estructura= input('Seleccione una opción:\n 1.ARRAY_LIST\n 2.LINKED_LIST\n')
+        if estructura==1:
+            estructura="ARRAY_LIST"
+        elif estructura==2:
+            estructura="LINKED_LIST"
+        else:
+            print("No es una opciòn")
+            sys.exit(0)
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        catalog = initCatalog(estructura)
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
