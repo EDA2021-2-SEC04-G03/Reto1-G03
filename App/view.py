@@ -23,6 +23,7 @@
 import config as cf
 import sys
 import controller
+from datetime import datetime
 from DISClib.ADT import list as lt
 assert cf
 
@@ -45,11 +46,11 @@ def printMenu():
     print("8-Proponer una nueva exposición en el museo ")
     print("0-Salir ")
  
-def initCatalog():
+def initCatalog(estructura):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog()
+    return controller.initCatalog(estructura)
 
 def loadData(catalog):
     """
@@ -85,14 +86,15 @@ def printobras(obras):
 """
 Menu principal
 """
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         estructura= input('Seleccione una opción:\n 1.ARRAY_LIST\n 2.LINKED_LIST\n')
-        if estructura==1:
+        if int(estructura)== 1:
             estructura="ARRAY_LIST"
-        elif estructura==2:
+        elif int(estructura)== 2:
             estructura="LINKED_LIST"
         else:
             print("No es una opciòn")
@@ -107,10 +109,29 @@ while True:
         print('\nUltimas 3 Obras cargadas:')
         printobras(controller.get3lastobras(catalog))
         
-    elif int(inputs[0]) >= 2:
+    elif int(inputs[0]) == 3:
+        size = input("Indique tamaño de la muestra: ")
+        algoritmo= input('Seleccione tipo de algoritmo de ordenamiento iterativo:\n'+
+                    '1.Insertion\n 2.Shell\n 3.Merge\n 4.Quick Sorts\n')
+        if int(algoritmo)== 1:
+            algoritmo="Insertion"
+        elif int(algoritmo)== 2:
+            algoritmo="Shell"
+        elif int(algoritmo)== 3:
+            algoritmo="Merge"
+        elif int(algoritmo)== 4:
+            algoritmo="quicksort"
+        else:
+            print("No es una opciòn")
+            sys.exit(0)
+        #TODO incluir el tipo de algoritmo en la respuesta en controller
+        #  y module, aqui solo inclui las opciones en el menù pero no hacen nada#
+        result = controller.sortArtworksByDateAcquired(catalog, int(size))
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(result))
+    elif int(inputs[0]) >= 3 or int(inputs[0]) ==2:
         print ("Lo sentimos, Requerimiento no disponible todavía")
         pass
-
     else:
         sys.exit(0)
 sys.exit(0)

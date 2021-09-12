@@ -29,6 +29,9 @@ from DISClib.DataStructures.arraylist import size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+
+from datetime import datetime
+import time
 assert cf
 
 
@@ -63,7 +66,7 @@ def addArtist(catalog, artist):
 
 # Funciones para creacion de datos
 
-#TODO hacer funciones para agregar datos
+
 # Funciones de consulta
 
 def getLastxElements(catalog,category,number):
@@ -97,17 +100,25 @@ def compareObraId(obra1, obra2):
         return 0
     else: 
         return 1
-def cmpArtworkByDateAcquired(artwork1, artwork2):
-    """
-Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
-Args:
-artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
-artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired' 
-"""
-    if artwork1['DateAcquired'] < artwork2['DateAcquired']:
-        return True
-    else: 
-        return False
 
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    #req 2, re utilizò la librerìa datetime#
+    #TODO DANI, ya deje listo como implementar esta funciòn en view y controller pero tengo un 
+    # problema con el formato de la fecha, ya importe la librerìa datetime pero me sale error#
+    fecha1= str(artwork1['DateAcquired'])
+    fecha2=str(artwork2['DateAcquired'])
+    date1 = datetime.strptime(fecha1, "%Y-%m-%d")
+    date2 = datetime.strptime(fecha2, "%Y-%m-%d")
 
 # Funciones de ordenamiento
+
+def sortArtworksByDateAcquired(catalog, size):
+    # req2
+    sub_list = lt.subList(catalog['obras'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sa.sort(sub_list, cmpArtworkByDateAcquired)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg
+
