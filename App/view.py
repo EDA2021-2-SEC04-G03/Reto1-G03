@@ -39,11 +39,11 @@ def printMenu():
     print("\nBienvenido")
     print("1-Cargar información en el catálogo, y escoger el tipo de estructura")
     print("2-Listar cronológicamente los artistas")
-    print("4-Listar cronológicamente las adquisiciones ")
-    print("2-Clasificar las obras de un artista por técnica")
-    print("2-Clasificar las obras por la nacionalidad de sus creadores ")
-    print("7-Transportar obras de un departamento ")
-    print("8-Proponer una nueva exposición en el museo ")
+    print("3-Listar cronológicamente las adquisiciones ")
+    print("4-Clasificar las obras de un artista por técnica")
+    print("5-Clasificar las obras por la nacionalidad de sus creadores ")
+    print("6-Transportar obras de un departamento ")
+    print("7-Proponer una nueva exposición en el museo ")
     print("0-Salir ")
  
 def initCatalog(estructura):
@@ -112,7 +112,7 @@ while True:
     elif int(inputs[0]) == 3:
         size = input("Indique tamaño de la muestra: ")
         algoritmo= input('Seleccione tipo de algoritmo de ordenamiento iterativo:\n'+
-                    '1.Insertion\n 2.Shell\n 3.Merge\n 4.Quick Sorts\n')
+                    ' 1.Insertion\n 2.Shell\n 3.Merge\n 4.Quick Sorts\n')
         if int(algoritmo)== 1:
             algoritmo="Insertion"
         elif int(algoritmo)== 2:
