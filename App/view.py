@@ -129,9 +129,9 @@ while True:
         result = controller.sortArtworksByDateAcquired(catalog, int(size))
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result))
-    elif int(inputs[0]) == 4:
-        artista = input("Indique el nombre del artista: ")
-    else:
+    elif int(inputs[0]) >= 3 or int(inputs[0]) ==2:
         print ("Lo sentimos, Requerimiento no disponible todavía")
+        pass
+    else:
         sys.exit(0)
 sys.exit(0)
