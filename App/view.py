@@ -119,7 +119,10 @@ while True:
         #TODO incluir el tipo de algoritmo en la respuesta en controller
         #  y module, aqui solo inclui las opciones en el menù pero no hacen nada#
         result = controller.sortArtworksByDateAcquired(catalog, int(size),int(algoritmo))
-        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+        if result == None:
+            print("Tamaño de muestra inconsistente")
+        else:
+            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result))
     elif int(inputs[0]) >= 3 or int(inputs[0]) ==2:
         print ("Lo sentimos, Requerimiento no disponible todavía")

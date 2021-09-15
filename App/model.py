@@ -123,18 +123,21 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 def sortArtworksByDateAcquired(catalog, size,type):
     # req2
-    sub_list = lt.subList(catalog['obras'], 1, size)
-    sub_list = sub_list.copy()
-    start_time = time.process_time()
-    if type==1:
-        ins.sort(sub_list, cmpArtworkByDateAcquired)
-    elif type==2:
-        sh.sort(sub_list, cmpArtworkByDateAcquired)
-    elif type==3:
-        me.sort(sub_list,cmpArtworkByDateAcquired)
-    elif type==4:
-        qu.sort(sub_list,cmpArtworkByDateAcquired)
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    return elapsed_time_mseg
+    if size <=  lt.size(catalog['obras']):
+        sub_list = lt.subList(catalog['obras'], 1, size)
+        sub_list = sub_list.copy()
+        start_time = time.process_time()
+        if type==1:
+            ins.sort(sub_list, cmpArtworkByDateAcquired)
+        elif type==2:
+            sh.sort(sub_list, cmpArtworkByDateAcquired)
+        elif type==3:
+            me.sort(sub_list,cmpArtworkByDateAcquired)
+        elif type==4:
+            qu.sort(sub_list,cmpArtworkByDateAcquired)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        return elapsed_time_mseg
+    else: 
+        pass
 
