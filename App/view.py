@@ -112,7 +112,7 @@ while True:
     elif int(inputs[0]) == 3:
         size = input("Indique tamaño de la muestra: ")
         algoritmo= input('Seleccione tipo de algoritmo de ordenamiento iterativo:\n'+
-                    ' 1.Insertion\n 2.Shell\n 3.Merge\n 4.Quick Sorts\n')
+                    ' 1.Insertion\n 2.Shell\n 3.Quick Sorts\n 4.Merge\n ')
         if int(algoritmo)>=5:
             print("No es una opciòn")
             

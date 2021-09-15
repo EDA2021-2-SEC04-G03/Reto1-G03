@@ -132,9 +132,9 @@ def sortArtworksByDateAcquired(catalog, size,type):
         elif type==2:
             sh.sort(sub_list, cmpArtworkByDateAcquired)
         elif type==3:
-            me.sort(sub_list,cmpArtworkByDateAcquired)
-        elif type==4:
             qu.sort(sub_list,cmpArtworkByDateAcquired)
+        elif type==4:
+            me.sort(sub_list,cmpArtworkByDateAcquired)
         stop_time = time.process_time()
         elapsed_time_mseg = (stop_time - start_time)*1000
         return elapsed_time_mseg
