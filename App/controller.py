@@ -57,8 +57,8 @@ def loadObras(catalog):
         model.addObra(catalog, obra)
 
 # Funciones de ordenamiento
-def sortArtworksByDateAcquired(catalog, size):
-    return model.sortArtworksByDateAcquired(catalog, size)
+def sortArtworksByDateAcquired(catalog,size,type):
+    return model.sortArtworksByDateAcquired(catalog, size,type)
 
 # Funciones de consulta sobre el catálogo
 

@@ -29,7 +29,10 @@ from DISClib.DataStructures.arraylist import size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
-
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import shellsort as sh
+from DISClib.Algorithms.Sorting import mergesort as me
+from DISClib.Algorithms.Sorting import quicksort as qu
 from datetime import datetime
 import time
 assert cf
@@ -107,17 +110,30 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     # problema con el formato de la fecha, ya importe la librerìa datetime pero me sale error#
     fecha1= str(artwork1['DateAcquired'])
     fecha2=str(artwork2['DateAcquired'])
-    date1 = datetime.strptime(fecha1, "%Y-%m-%d")
-    date2 = datetime.strptime(fecha2, "%Y-%m-%d")
+    if fecha1=="" or fecha2== "":
+        temp=False
+    else:
+        date1 = datetime.strptime(fecha1, "%Y-%m-%d")
+        date2 = datetime.strptime(fecha2, "%Y-%m-%d")
+        temp= date1>date2
+    
+ 
 
 # Funciones de ordenamiento
 
-def sortArtworksByDateAcquired(catalog, size):
+def sortArtworksByDateAcquired(catalog, size,type):
     # req2
     sub_list = lt.subList(catalog['obras'], 1, size)
     sub_list = sub_list.copy()
     start_time = time.process_time()
-    sa.sort(sub_list, cmpArtworkByDateAcquired)
+    if type==1:
+        ins.sort(sub_list, cmpArtworkByDateAcquired)
+    elif type==2:
+        sh.sort(sub_list, cmpArtworkByDateAcquired)
+    elif type==3:
+        me.sort(sub_list,cmpArtworkByDateAcquired)
+    elif type==4:
+        qu.sort(sub_list,cmpArtworkByDateAcquired)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg

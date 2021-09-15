@@ -113,20 +113,12 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         algoritmo= input('Seleccione tipo de algoritmo de ordenamiento iterativo:\n'+
                     ' 1.Insertion\n 2.Shell\n 3.Merge\n 4.Quick Sorts\n')
-        if int(algoritmo)== 1:
-            algoritmo="Insertion"
-        elif int(algoritmo)== 2:
-            algoritmo="Shell"
-        elif int(algoritmo)== 3:
-            algoritmo="Merge"
-        elif int(algoritmo)== 4:
-            algoritmo="quicksort"
-        else:
+        if int(algoritmo)>=5:
             print("No es una opciòn")
-            sys.exit(0)
+            
         #TODO incluir el tipo de algoritmo en la respuesta en controller
         #  y module, aqui solo inclui las opciones en el menù pero no hacen nada#
-        result = controller.sortArtworksByDateAcquired(catalog, int(size))
+        result = controller.sortArtworksByDateAcquired(catalog, int(size),int(algoritmo))
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result))
     elif int(inputs[0]) >= 3 or int(inputs[0]) ==2:
