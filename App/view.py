@@ -26,6 +26,8 @@ import controller
 from datetime import datetime
 from DISClib.ADT import list as lt
 assert cf
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 
 """
@@ -115,9 +117,6 @@ while True:
                     ' 1.Insertion\n 2.Shell\n 3.Quick Sorts\n 4.Merge\n ')
         if int(algoritmo)>=5:
             print("No es una opciòn")
-            
-        #TODO incluir el tipo de algoritmo en la respuesta en controller
-        #  y module, aqui solo inclui las opciones en el menù pero no hacen nada#
         result = controller.sortArtworksByDateAcquired(catalog, int(size),int(algoritmo))
         if result == None:
             print("Tamaño de muestra inconsistente")
