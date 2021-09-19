@@ -25,7 +25,7 @@
  """
 
 
-from DISClib.DataStructures.arraylist import size
+from DISClib.DataStructures.arraylist import  size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -36,6 +36,7 @@ from DISClib.Algorithms.Sorting import quicksort as qu
 from datetime import datetime
 import time
 assert cf
+import operator
 
 
 
@@ -106,38 +107,69 @@ def compareObraId(obra1, obra2):
 
 def cmpArtworkByDateAcquired(artwork1, artwork2):
     #req 2, re utilizò la librerìa datetime#
-    #TODO DANI, ya deje listo como implementar esta funciòn en view y controller pero tengo un 
-    # problema con el formato de la fecha, ya importe la librerìa datetime pero me sale error#
     fecha1= str(artwork1['DateAcquired'])
     fecha2=str(artwork2['DateAcquired'])
-    if fecha1=="" or fecha2== "":
-        temp=False
-    else:
-        date1 = datetime.strptime(fecha1, "%Y-%m-%d")
-        date2 = datetime.strptime(fecha2, "%Y-%m-%d")
-        temp= date1>date2
+    if fecha1=="":
+        fecha1="0001-01-01"
+    if fecha2=="":
+        fecha2="0001-01-01"
+    
+    date1 = datetime.strptime(fecha1, "%Y-%m-%d")
+    date2 = datetime.strptime(fecha2, "%Y-%m-%d")
+    return date1<date2
     
  
 
 # Funciones de ordenamiento
 
-def sortArtworksByDateAcquired(catalog, size,type):
+def sortArtworksByDateAcquired(catalog,inicial,final):
     # req2
-    if size <=  lt.size(catalog['obras']):
-        sub_list = lt.subList(catalog['obras'], 1, size)
-        sub_list = sub_list.copy()
-        start_time = time.process_time()
-        if type==1:
-            ins.sort(sub_list, cmpArtworkByDateAcquired)
-        elif type==2:
-            sh.sort(sub_list, cmpArtworkByDateAcquired)
-        elif type==3:
-            qu.sort(sub_list,cmpArtworkByDateAcquired)
-        elif type==4:
-            me.sort(sub_list,cmpArtworkByDateAcquired)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        return elapsed_time_mseg
-    else: 
-        pass
+    inicial=datetime.strptime(str(inicial),"%Y-%m-%d")
+    final=datetime.strptime(str(final),"%Y-%m-%d")
+    sub_list =(catalog['obras'])
+    lista_ordenada= ins.sort(sub_list,cmpArtworkByDateAcquired)
+    final_list= lt.newList("ARRAY_LIST")
+    for i in lt.iterator(lista_ordenada):
+        date=i['DateAcquired']
+        if date=="":
+            date="0001-01-01"
+        date_format=datetime.strptime(str(date),"%Y-%m-%d")
+        if date_format<= final and date_format>=inicial:
+                lt.addLast(final_list,i)
+    return (final_list)
+
+def NumberOfPurchase (lista_ordenada):
+    num_purchase=0
+    for n in lt.iterator(lista_ordenada):
+        credit_line= n["Creditline"]
+        if credit_line=="Purchase":
+            num_purchase+=1
+    return num_purchase
+    
+def RankingCountriesByArtworks (catalog,obras):
+    #req4
+    lista_obras= catalog["obras"]
+    dict_obras={}
+    lista_artistas=catalog["artistas"]
+    for i in range (lt.size(obras)):
+        for n in range (lt.size(lista_obras)):
+            if obras[i]==lista_obras[n]["Título"]:
+                dict_obras[obras[i]]=lista_obras[n]["ConstituentID"]
+    dict_nacionalidades={}
+    for valor in dict_obras.values:
+       for j in range(lt.size(lista_artistas)):
+           pos=lista_artistas[j]
+           if valor== pos["ConstituentID"]:
+               nacionalidad=pos["nacionalidad"]
+               if nacionalidad not in dict_nacionalidades:
+                   dict_nacionalidades[nacionalidad]=1
+               else:
+                   dict_nacionalidades[nacionalidad]+=1
+    dict_ordenado=sorted(dict_nacionalidades.items(),key=operator.itemgetter(1), reverse=True)
+    return (dict_ordenado)
+
+    
+
+
+
 
