@@ -104,10 +104,6 @@ while True:
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
-        print('Ultimos 3 Artistas cargados: ')
-        printartists(controller.getLastxElements(catalog['artistas'],3))
-        print('\nUltimas 3 Obras cargadas:')
-        printobras(controller.getLastxElements(catalog['obras'],3))
     elif int(inputs[0]) == 2:
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
