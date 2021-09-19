@@ -112,8 +112,10 @@ while True:
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
         listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
-        print(lt.getElement(listaEnRango,0))
+        print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
+        print("Primeros 3 artistas")
         printartists(controller.getFirstxElements(listaEnRango,3))
+        print("Utlimos 3 artistas")
         printartists(controller.getLastxElements(listaEnRango,3))
     elif int(inputs[0]) == 3:
         size = input("Indique tamaño de la muestra: ")
