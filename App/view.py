@@ -65,11 +65,9 @@ def printartists(artistas):
     size = lt.size(artistas)
     if size:
         for artista in lt.iterator(artistas):
-            print('ID Constituente: ' + artista["ConstituentID"] + '  Nombre: ' +
-                  artista["DisplayName"] + ' Bio: ' + artista["ArtistBio"]+ 
-                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"] +
-                  ' Fecha de inicio/Fecha fin: '+ artista["BeginDate"]+'/'+ artista["EndDate"]+
-                 " Wiki QID: " +artista["Wiki QID"]+ ' ULAN: '+artista["ULAN"])
+            print(' Nombre: ' +artista["DisplayName"] + ' Fecha de inicio: '+ 
+                    artista["BeginDate"]+' Fecha fin: '+ artista["EndDate"]+
+                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"] )
     else:
         print('No se han cargado artistas')
 
@@ -107,10 +105,16 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
         print('Ultimos 3 Artistas cargados: ')
-        printartists(controller.get3lastartists(catalog))
+        printartists(controller.getLastxElements(catalog['artistas'],3))
         print('\nUltimas 3 Obras cargadas:')
-        printobras(controller.get3lastobras(catalog))
-        
+        printobras(controller.getLastxElements(catalog['obras'],3))
+    elif int(inputs[0]) == 2:
+        date1 = input("Indique año inicial (formato YYYY): ")
+        date2 = input("Indique año final (formato YYYY): ")
+        listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
+        print(lt.getElement(listaEnRango,0))
+        printartists(controller.getFirstxElements(listaEnRango,3))
+        printartists(controller.getLastxElements(listaEnRango,3))
     elif int(inputs[0]) == 3:
         size = input("Indique tamaño de la muestra: ")
         algoritmo= input('Seleccione tipo de algoritmo de ordenamiento iterativo:\n'+
@@ -123,7 +127,7 @@ while True:
         else:
             print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result))
-    elif int(inputs[0]) >= 3 or int(inputs[0]) ==2:
+    elif int(inputs[0]) >= 3:
         print ("Lo sentimos, Requerimiento no disponible todavía")
         pass
     else:
