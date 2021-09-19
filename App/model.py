@@ -72,21 +72,28 @@ def addArtist(catalog, artist):
 
 # Funciones de consulta
 
-def getLastxElements(catalog,category,number):
+def getLastxElements(lista,number):
     """
-    Retorna los 3 ultimos elementos dado un catalogo (catalog), categoría ("artistas" o  "obras") y una cantidad de posiciones (3)
-    tienes que generar una lista donde almacenes los elementos a los que accedes por posición
-    ideas:puedes usar get.element para obtener el elemento y size para obtener ultimas tres posiciones
+    Retorna los x ultimos elementos dado una LISTA"
     """
-    elements= catalog[category]
+    elements= lista
     lastelements= lt.newList("ARRAY_LIST")
-    tam1= lt.size(elements)
-    tam2=tam1-number
-    for pos in range (tam2,tam1+1):
+    tamañoLista= lt.size(elements)
+    tam2=tamañoLista-(number-1)
+    for pos in range (tam2,tamañoLista+1):
         new=lt.getElement (elements,pos)
         lt.addLast (lastelements,new)
     return lastelements
-
+def getFirstxElements(lista,number):
+    """
+    Retorna los x primeros elementos dado una LISTA"
+    """
+    elements= lista
+    firstlements= lt.newList("ARRAY_LIST")
+    for pos in range (1,number+1):
+        new=lt.getElement (elements,pos)
+        lt.addLast (firstlements,new)
+    return firstlements
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareArtistId(artist1, artist2):
@@ -104,10 +111,21 @@ def compareObraId(obra1, obra2):
     else: 
         return 1
 
+def cmpArtistByDate(artist1, artist2):
+    #req 1, re utilizò la librerìa datetime
+    ##tomaremos vacios como automaticamente menor
+    fecha1= (artist1['BeginDate'])
+    fecha2=(artist2['BeginDate'])
+    temp=False
+    if fecha1=="":
+        fecha1=0 
+    if fecha2=="":
+        fecha2=0
+    temp= int(fecha1)<int(fecha2)
+    return temp
+
 def cmpArtworkByDateAcquired(artwork1, artwork2):
     #req 2, re utilizò la librerìa datetime#
-    #TODO DANI, ya deje listo como implementar esta funciòn en view y controller pero tengo un 
-    # problema con el formato de la fecha, ya importe la librerìa datetime pero me sale error#
     fecha1= str(artwork1['DateAcquired'])
     fecha2=str(artwork2['DateAcquired'])
     if fecha1=="" or fecha2== "":
@@ -116,11 +134,26 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
         date1 = datetime.strptime(fecha1, "%Y-%m-%d")
         date2 = datetime.strptime(fecha2, "%Y-%m-%d")
         temp= date1>date2
-    
+    return temp
  
 
 # Funciones de ordenamiento
-
+def sortArtistInDateRange(catalog, date1,date2):
+    # req1
+    date1 = int(date1)
+    date2 = int(date2)
+    #primero ordeno toda la lista#
+    start_time = time.process_time()
+    listaOrdenada= me.sort((catalog['artistas']),cmpArtistByDate)
+    listaEnRango = lt.newList()
+    for i in lt.iterator(listaOrdenada):
+        date= int(i['BeginDate'])
+        if date != 0 and date >= date1 and date<=date2:
+            lt.addLast(listaEnRango, i)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000   
+    return (listaEnRango)
+    
 def sortArtworksByDateAcquired(catalog, size,type):
     # req2
     if size <=  lt.size(catalog['obras']):

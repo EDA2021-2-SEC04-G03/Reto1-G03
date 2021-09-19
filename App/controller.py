@@ -42,7 +42,7 @@ def loadArtistas(catalog):
     """
     Carga todos los artistas del archivo y la agrega a la lista de obras en el catalogo general
     """
-    Artistfile = cf.data_dir + 'Artists-utf8-large.csv'
+    Artistfile = cf.data_dir + 'Artists-utf8-small.csv'
     input_file = csv.DictReader(open(Artistfile, encoding='utf-8'))
     for artist in input_file:
         model.addArtist(catalog, artist)
@@ -51,7 +51,7 @@ def loadObras(catalog):
     """
     Carga todas las obras del archivo y la agrega a la lista de obras en el catalogo general
     """
-    Obrasfile = cf.data_dir + 'Artworks-utf8-large.csv'
+    Obrasfile = cf.data_dir + 'Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(Obrasfile, encoding='utf-8'))
     for obra in input_file:
         model.addObra(catalog, obra)
@@ -60,20 +60,14 @@ def loadObras(catalog):
 def sortArtworksByDateAcquired(catalog,size,type):
     return model.sortArtworksByDateAcquired(catalog, size,type)
 
+def sortArtistInDateRange(catalog, date1,date2):
+    return model.sortArtistInDateRange(catalog, date1,date2)
+
 # Funciones de consulta sobre el catálogo
 
-def get3lastartists(catalog):
-# FUNCIÓN PARA IMPRIMIR ULTIMOS TRES ELEMENTOS DE ARTISTAS #
-    """
-    Retorna los ultimos 3 artistas cargados
-    """
-    lastsartists = model.getLastxElements(catalog,"artistas", 3)
-    return lastsartists
-
-def get3lastobras(catalog):
-# FUNCIÓN PARA IMPRIMIR ULTIMOS TRES ELEMENTOS DE OBRAS#
-    """
-    Retorna las ultimos 3 obras cargadas
-    """
-    lastsObras = model.getLastxElements(catalog,"obras", 3)
-    return lastsObras
+def getLastxElements(list, number):
+    lastElements = model.getLastxElements(list, number)
+    return lastElements
+def getFirstxElements(list, number):
+    lastElements = model.getFirstxElements(list, number)
+    return lastElements
