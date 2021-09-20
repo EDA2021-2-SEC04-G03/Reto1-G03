@@ -75,12 +75,9 @@ def printobras(obras):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
-            print('ID: ' + obra["ObjectID"] + ' Título: ' + obra["Title"] + 
-            ' ID Constituente: ' + obra["ConstituentID"] +  ' Fecha: ' + obra["Date"] +
-             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] + 
-             ' CreditLine: ' + obra["CreditLine"] + 'Número de Acceso' + obra["AccessionNumber"] +
-             ' Clasificación' + obra["Classification"] + ' Departamento: ' + obra["Department"] +
-             'Fecha de Adquisción' + obra["DateAcquired"])       
+            print( ' Título: ' + obra["Title"] + ' ID Constituente: ' +
+             obra["ConstituentID"] +  ' Fecha: ' + obra["DateAcquired"] +
+             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] )       
     else:
         print('No se han cargado obras')
 """
@@ -116,15 +113,16 @@ while True:
     elif int(inputs[0]) == 3:
         inicial= input("Indique la fecha inicial: ")
         final= input("Indique la fecha final: ")
-        result = controller.sortArtworksByDateAcquired(catalog,inicial,final)
-       
-        num_obras= lt.size(result)
-        #last_3_elements=controller.get3lastobras(catalog)
+        listaOrdenada = controller.sortArtworksByDateAcquired(catalog)
+        listaEnRango= controller.subslitArtworksInRange(listaOrdenada,inicial,final)
+        num_obras= lt.size(listaEnRango)
         #num_purchase= controller.NumberOfPurchase(num_obras)
-        print(result)
-        #print(num_purchase)
-    
- 
+        print("Primeras 3 obras")
+        printobras(controller.getFirstxElements(listaEnRango,3))
+        print("Utlimas 3 obras")
+        printobras(controller.getLastxElements(listaEnRango,3))
+        #print("Número de obras adquiridas por compra: "+ str(num_purchase))
+
     elif int(inputs[0])==5:
         obras=catalog["obras"]
         nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)

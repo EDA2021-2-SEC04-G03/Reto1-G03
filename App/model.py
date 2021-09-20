@@ -156,15 +156,16 @@ def sortArtistInDateRange(catalog, date1,date2):
     elapsed_time_mseg = (stop_time - start_time)*1000   
     return (listaEnRango)
     
-
-def sortArtworksByDateAcquired(catalog,inicial,final):
-    # req2
-    inicial=datetime.strptime(str(inicial),"%Y-%m-%d")
-    final=datetime.strptime(str(final),"%Y-%m-%d")
+def sortArtworksByDateAcquired(catalog):
     sub_list =(catalog['obras'])
     lista_ordenada= ins.sort(sub_list,cmpArtworkByDateAcquired)
+    return lista_ordenada
+
+def subslitArtworksInRange(lista,inicial,final):
+    inicial=datetime.strptime(str(inicial),"%Y-%m-%d")
+    final=datetime.strptime(str(final),"%Y-%m-%d")
     final_list= lt.newList("ARRAY_LIST")
-    for i in lt.iterator(lista_ordenada):
+    for i in lt.iterator(lista):
         date=i['DateAcquired']
         if date=="":
             date="0001-01-01"
