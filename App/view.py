@@ -114,19 +114,31 @@ while True:
         print("Utlimos 3 artistas")
         printartists(controller.getLastxElements(listaEnRango,3))
     elif int(inputs[0]) == 3:
-        size = input("Indique tamaño de la muestra: ")
-        algoritmo= input('Seleccione tipo de algoritmo de ordenamiento iterativo:\n'+
-                    ' 1.Insertion\n 2.Shell\n 3.Quick Sorts\n 4.Merge\n ')
-        if int(algoritmo)>=5:
-            print("No es una opciòn")
-        result = controller.sortArtworksByDateAcquired(catalog, int(size),int(algoritmo))
-        if result == None:
-            print("Tamaño de muestra inconsistente")
-        else:
-            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
-                                          str(result))
-    elif int(inputs[0]) >= 3:
-        print ("Lo sentimos, Requerimiento no disponible todavía")
+        inicial= input("Indique la fecha inicial: ")
+        final= input("Indique la fecha final: ")
+        result = controller.sortArtworksByDateAcquired(catalog,inicial,final)
+       
+        num_obras= lt.size(result)
+        #last_3_elements=controller.get3lastobras(catalog)
+        #num_purchase= controller.NumberOfPurchase(num_obras)
+        print(result)
+        #print(num_purchase)
+    
+ 
+    elif int(inputs[0])==5:
+        obras=catalog["obras"]
+        nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)
+        print("El top 10 de los países en el MoMa son: ")
+        num=0
+        for i in nacionalidades:
+            print(str(i)+ ":"+ str(nacionalidades[i]))
+            num+=1
+            if num==10:
+                break
+        print ("La nacionalidad con mayor número de obras: ")
+        
+    elif int(inputs[0]) >= 6 :
+        print ("Lo sentimos, Requerimiento no disponible")
         pass
     else:
         sys.exit(0)

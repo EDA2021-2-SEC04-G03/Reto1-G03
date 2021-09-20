@@ -23,7 +23,7 @@
 import config as cf
 import model
 import csv
-
+from datetime import datetime
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -57,14 +57,18 @@ def loadObras(catalog):
         model.addObra(catalog, obra)
 
 # Funciones de ordenamiento
-def sortArtworksByDateAcquired(catalog,size,type):
-    return model.sortArtworksByDateAcquired(catalog, size,type)
+def sortArtworksByDateAcquired(catalog,inicial,final): 
+    return model.sortArtworksByDateAcquired(catalog,inicial,final)
+
+def NumberOfPurchase (lista_ordenada):
+    return model.NumberOfPurchase(lista_ordenada)
 
 def sortArtistInDateRange(catalog, date1,date2):
     return model.sortArtistInDateRange(catalog, date1,date2)
 
+def RankingCountriesByArtworks(catalog,obras):
+    return model.RankingCountriesByArtworks(catalog,obras)
 # Funciones de consulta sobre el catálogo
-
 def getLastxElements(list, number):
     lastElements = model.getLastxElements(list, number)
     return lastElements
