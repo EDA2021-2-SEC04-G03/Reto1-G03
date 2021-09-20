@@ -156,8 +156,8 @@ def sortArtistInDateRange(catalog, date1,date2):
     elapsed_time_mseg = (stop_time - start_time)*1000   
     return (listaEnRango)
     
-def sortArtworksByDateAcquired(catalog):
-    sub_list =(catalog['obras'])
+def sortArtworksByDateAcquired(lista):
+    sub_list =(lista)
     lista_ordenada= ins.sort(sub_list,cmpArtworkByDateAcquired)
     return lista_ordenada
 
@@ -204,7 +204,22 @@ def RankingCountriesByArtworks (catalog,obras):
     dict_ordenado=sorted(dict_nacionalidades.items(),key=operator.itemgetter(1), reverse=True)
     return (dict_ordenado)
 
-    
+
+#Requisito 5#
+def AsignarPrecio(artwork):
+    #considerar datos vacios revisar reglas#
+    return None
+def AsignarPeso(artwork):
+    #considerar datos vacios revisar reglas#
+    return None
+def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
+    obrasPorDepartamento= lt.newList()
+    #recorrido que revise el departamento y añada la obra a la lista si es el dep y asigna precio#
+    return obrasPorDepartamento
+def cmpArtworkPorPrecio(Artwork1,Artwork2):
+    return None
+def OrdenarPorPrecio(lista):
+    return None 
 
 
 

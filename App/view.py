@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.controller import sortArtworksByDateAcquired
 import config as cf
 import sys
 import controller
@@ -113,7 +114,7 @@ while True:
     elif int(inputs[0]) == 3:
         inicial= input("Indique la fecha inicial: ")
         final= input("Indique la fecha final: ")
-        listaOrdenada = controller.sortArtworksByDateAcquired(catalog)
+        listaOrdenada = controller.sortArtworksByDateAcquired(catalog["obras"])
         listaEnRango= controller.subslitArtworksInRange(listaOrdenada,inicial,final)
         num_obras= lt.size(listaEnRango)
         #num_purchase= controller.NumberOfPurchase(num_obras)
@@ -122,7 +123,6 @@ while True:
         print("Utlimas 3 obras")
         printobras(controller.getLastxElements(listaEnRango,3))
         #print("Número de obras adquiridas por compra: "+ str(num_purchase))
-
     elif int(inputs[0])==5:
         obras=catalog["obras"]
         nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)
@@ -134,7 +134,16 @@ while True:
             if num==10:
                 break
         print ("La nacionalidad con mayor número de obras: ")
-        
+    elif int(inputs[0])==6:
+        departamento= input("Por favor ingrese el nombre del departamento:") 
+        ObrasporDepartamento= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog, departamento)
+        ObrasPorFecha= controller.sortArtworksByDateAcquired(ObrasporDepartamento)
+        ObrasPorPrecio= controller.OrdenarPorPrecio(ObrasporDepartamento)
+        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ lt.size(ObrasporDepartamento))
+        print("5 Obras más antiguas a trasportar")
+        printobras(controller.getLastxElements(ObrasPorFecha),5)
+        print("5 Obras más caras a transportar")
+        printobras(controller.getLastxElements(ObrasPorPrecio),5)
     elif int(inputs[0]) >= 6 :
         print ("Lo sentimos, Requerimiento no disponible")
         pass
