@@ -99,48 +99,28 @@ def addObra(catalog, obra):
     codigosArtistas= obra['ConstituentID']
     codigosArtistas= codigosArtistas.replace("[","")
     codigosArtistas= codigosArtistas.replace("]","")
+    codigosArtistas= codigosArtistas.replace(" ","")
     codigosArtistas= codigosArtistas.split(",")
     artwork["ConstituentID"]= codigosArtistas
+
     """
     vamos a hacer la conexión de referencias entre obras y artistas
     al artista se le adiciona la info de la obra a la lista artworks
      y viceversa con los artistas a la obra
     """
-    #TODO pregunta cupi ¿se debería hacer busqueda binaria, es que no nos enseñaron eso#
+    #TODO pregunta cupi#
     for ID in codigosArtistas:
         ID= int(ID)
         for artista in lt.iterator(catalog["artistas"]):
-            IDArtista= artista["ConstituentID"]
+            IDArtista=(artista["ConstituentID"]).replace(" ","")
+            IDArtista= int(IDArtista)
             if ID == IDArtista:
-                lt.addLast(artista["Artorks"],artwork)
+                lt.addLast(artista["Artworks"],artwork)
                 lt.addLast(artwork["Artists"],artista)
                 
     lt.addLast(catalog['obras'], artwork)
 
 # Funciones de consulta
-
-def getLastxElements(lista,number):
-    """
-    Retorna los x ultimos elementos dado una LISTA"
-    """
-    elements= lista
-    lastelements= lt.newList("ARRAY_LIST")
-    tamañoLista= lt.size(elements)
-    tam2=tamañoLista-(number-1)
-    for pos in range (tam2,tamañoLista+1):
-        new=lt.getElement (elements,pos)
-        lt.addLast (lastelements,new)
-    return lastelements
-def getFirstxElements(lista,number):
-    """
-    Retorna los x primeros elementos dado una LISTA"
-    """
-    elements= lista
-    firstlements= lt.newList("ARRAY_LIST")
-    for pos in range (1,number+1):
-        new=lt.getElement (elements,pos)
-        lt.addLast (firstlements,new)
-    return firstlements
 
 def ObrasPorArtistaPorTecnica(catalogo,nombre):
     artistas= catalogo["artistas"]
@@ -216,7 +196,7 @@ def sortArtistInDateRange(catalog, date1,date2):
     #primero ordeno toda la lista#
     start_time = time.process_time()
     listaOrdenada= me.sort((catalog['artistas']),cmpArtistByDate)
-    listaEnRango = lt.newList()
+    listaEnRango = lt.newList("ARRAY_LIST") #porque luego se accede por pos#s
     for i in lt.iterator(listaOrdenada):
         date= int(i['BeginDate'])
         if date != 0 and date >= date1 and date<=date2:

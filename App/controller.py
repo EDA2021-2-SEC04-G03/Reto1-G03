@@ -70,12 +70,6 @@ def sortArtistInDateRange(catalog, date1,date2):
 def RankingCountriesByArtworks(catalog,obras):
     return model.RankingCountriesByArtworks(catalog,obras)
 # Funciones de consulta sobre el catálogo
-def getLastxElements(list, number):
-    lastElements = model.getLastxElements(list, number)
-    return lastElements
-def getFirstxElements(list, number):
-    lastElements = model.getFirstxElements(list, number)
-    return lastElements
 
 #Funciones requerimeinto 5#
 def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):

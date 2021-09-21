@@ -78,9 +78,39 @@ def printobras(obras):
         for obra in lt.iterator(obras):
             print( ' Título: ' + obra["Title"] + ' Fecha: ' + obra["DateAcquired"] +
              ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] +
-             " Artistas:" + str(obra["Artists"]))       
+             " Artistas:" )
     else:
         print('No se han cargado obras')
+def printPrimerosyUltimosartistas(lista):
+    if lt.size(listaEnRango)>3:
+            primeros= lt.subList(listaEnRango,1,3)
+            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-2,3)
+            print("Primeros 3 artisas")
+            printartists(primeros)
+            print("Utlimos 3 artisas")
+            printartists(ultimos)
+    elif lt.size(listaEnRango)<=3:
+            print("Como solo hay 3 o menos artistas, estos son:")
+            printartists(listaEnRango)
+def printPrimerosyUltimosobras(lista):
+    if lt.size(listaEnRango)>3:
+            primeros= lt.subList(listaEnRango,1,3)
+            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-2,3)
+            print("Primeras 3 obras ")
+            printobras(primeros)
+            print("Utlimos 3 obras ")
+            printobras(ultimos)
+    elif lt.size(listaEnRango)<=3:
+            print("Como solo hay 3 o menos obras, estas son:")
+            printobras(listaEnRango)
+def printUltimos5obras(lista,tipo):
+    if lt.size(listaEnRango)>5:
+            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-3,3)
+            print("Obras más "+str(tipo))
+            printobras(ultimos)
+    elif lt.size(listaEnRango)<=5:
+            print("Como solo hay 5 o menos "+str(tipo)+", estos son:")
+            printartists(listaEnRango)
 
 """
 Menu principal
@@ -107,29 +137,24 @@ while True:
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
         listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
-        print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
-        if lt.size(listaEnRango)>3:
-            primeros= lt.subList(listaEnRango,1,3)
-            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-3,3)
-            print("Utlimos 3 artistas")
-            printartists(ultimos)
-            print("Primeros 3 artistas")
-            printartists(primeros)
-        elif lt.size(listaEnRango)<=3:
-            print("Como solo hay 3 o menos artistas, estos son:")
-            printartists(listaEnRango)
+        if lt.size(listaEnRango)==0:
+            print("No hay artistas nacidos en el rango")
+        else:
+            print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
+            printPrimerosyUltimosartistas(listaEnRango)
     elif int(inputs[0]) == 3:
         inicial= input("Indique la fecha inicial: ")
         final= input("Indique la fecha final: ")
         listaOrdenada = controller.sortArtworksByDateAcquired(catalog["obras"])
         listaEnRango= controller.subslitArtworksInRange(listaOrdenada,inicial,final)
-        num_obras= lt.size(listaEnRango)
-        #num_purchase= controller.NumberOfPurchase(num_obras)
-        print("Primeras 3 obras")
-        printobras(controller.getFirstxElements(listaEnRango,3))
-        print("Utlimas 3 obras")
-        printobras(controller.getLastxElements(listaEnRango,3))
-        #print("Número de obras adquiridas por compra: "+ str(num_purchase))
+        numPurchased= 0 ###TODO#############
+        if lt.size(listaEnRango)==0:
+            print("No hay obras en el rango")
+        else:
+            print("Hay "+ str(lt.size(listaEnRango))+ " obras  entre "+ str(inicial) +" y "+ str(final))
+            printPrimerosyUltimosobras(listaEnRango)
+            print("Hay "+ str(numPurchased)+ " obras adquiridas por compra")
+        
     elif int(inputs[0]) == 4:
         nombre= input("Indique el nombre del artista: ")
         
@@ -151,9 +176,9 @@ while True:
         ObrasPorPrecio= controller.OrdenarPorPrecio(ObrasporDepartamento)
         print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ lt.size(ObrasporDepartamento))
         print("5 Obras más antiguas a trasportar")
-        printobras(controller.getLastxElements(ObrasPorFecha,5))
+        printUltimos5obras(ObrasPorFecha," antiguas ")
         print("5 Obras más caras a transportar")
-        printobras(controller.getLastxElements(ObrasPorPrecio,5))
+        printUltimos5obras(ObrasPorPrecio," cotosas ")
     elif int(inputs[0]) >= 6 :
         print ("Lo sentimos, Requerimiento no disponible")
         pass
