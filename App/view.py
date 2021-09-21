@@ -20,7 +20,6 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from App.controller import sortArtworksByDateAcquired
 import config as cf
 import sys
 import controller
@@ -68,7 +67,8 @@ def printartists(artistas):
         for artista in lt.iterator(artistas):
             print(' Nombre: ' +artista["DisplayName"] + ' Fecha de inicio: '+ 
                     artista["BeginDate"]+' Fecha fin: '+ artista["EndDate"]+
-                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"] )
+                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"]+
+                  " Obras" + str(artista["Artworks"]) )
     else:
         print('No se han cargado artistas')
 
@@ -76,9 +76,9 @@ def printobras(obras):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
-            print( ' Título: ' + obra["Title"] + ' ID Constituente: ' +
-             obra["ConstituentID"] +  ' Fecha: ' + obra["DateAcquired"] +
-             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] )       
+            print( ' Título: ' + obra["Title"] + ' Fecha: ' + obra["DateAcquired"] +
+             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] +
+             " Artistas:" + str(obra["Artists"]))       
     else:
         print('No se han cargado obras')
 """

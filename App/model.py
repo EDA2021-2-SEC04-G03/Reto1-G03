@@ -54,22 +54,68 @@ def newCatalog(estructura):
 
 # Funciones para agregar informacion al catalogo
 
-def addObra(catalog, obra):
+def addArtist(catalog, artista):
     """
-    Se adiciona la obra a la lista de obras
+    Adiciona un artista a lista de artistas, se hace un diccionario vacio y luego 
+    se llena con los atributos que necesitamos en el reto, tambien se asigna un espacio
+    para las obras con una lista vacia.
     """
-    lt.addLast(catalog['obras'], obra)
-
-
-def addArtist(catalog, artist):
-    """
-    Adiciona un artista a lista de artistas, 
-    """
+    artist= {}
+    artist["ConstituentID"]= artista["ConstituentID"]
+    artist["DisplayName"]= artista["DisplayName"]
+    artist["BeginDate"]= artista["BeginDate"]
+    artist["EndDate"]= artista["EndDate"]
+    artist["Nationality"]= artista["Nationality"]
+    artist["Gender"]= artista["Gender"]
+    artist["Artworks"]= lt.newList("ARRAY_LIST",cmpfunction= compareObraId)
     lt.addLast(catalog['artistas'], artist)
 
-
-# Funciones para creacion de datos
-
+def addObra(catalog, obra):
+    """
+    Adiciona una obra a lista de obras, se hace un diccionario vacio y luego 
+    se llena con los atributos que necesitamos en el reto, tambien se asigna un espacio
+    para las obras con una lista vacia.
+    """
+    artwork={}
+    artwork["ObjectID"]= obra["ObjectID"]
+    artwork["Title"]= obra["Title"]
+    artwork["Medium"]= obra["Medium"]
+    artwork["Date"]= obra["Date"]
+    artwork["DateAcquired"]= obra["DateAcquired"]
+    artwork["CreditLine"]= obra["CreditLine"]
+    artwork["Dimensions"]= obra["Dimensions"]
+    artwork["Depth (cm)"]= obra["Depth (cm)"]
+    artwork["Diameter (cm)"]= obra["Diameter (cm)"]
+    artwork["Height (cm)"]= obra["Height (cm)"]
+    artwork["Length (cm)"]= obra["Length (cm)"]
+    artwork["Weight (kg)"]= obra["Weight (kg)"]
+    artwork["Width (cm)"]= obra["Width (cm)"]
+    artwork["Seat Height (cm)"]= obra["Seat Height (cm)"]
+    artwork["Artists"]= lt.newList("ARRAY_LIST",cmpfunction=compareArtistId)
+    """en obras los artistas estan como constituente id, en un formato [,] separado por comas, 
+    vamos a obtener de este formato el int del ID para cada artista y lo almacenaremos en una lista
+    primero quitamos los corchetes del string y luego haremos la lista usando , como separador
+    """
+    codigosArtistas= obra['ConstituentID']
+    codigosArtistas= codigosArtistas.replace("[","")
+    codigosArtistas= codigosArtistas.replace("]","")
+    codigosArtistas= codigosArtistas.split(",")
+    artwork["ConstituentID"]= codigosArtistas
+    """
+    vamos a hacer la conexión de referencias entre obras y artistas
+    al artista se le adiciona la info de la obra a la lista artworks
+     y viceversa con los artistas a la obra
+    """
+    #TODO pregunta cupi ¿se debería hacer busqueda binaria, es que no nos enseñaron eso#
+    for ID in codigosArtistas:
+        ID= int(ID)
+        for artista in lt.iterator(catalog["artistas"]):
+            IDArtista= artista["ConstituentID"]
+            if ID == IDArtista:
+                lt.addLast(artista["Artorks"],artwork)
+                lt.addLast(artwork["Artists"],artista)
+                
+    lt.addLast(catalog['obras'], artwork)
 
 # Funciones de consulta
 
@@ -95,6 +141,8 @@ def getFirstxElements(lista,number):
         new=lt.getElement (elements,pos)
         lt.addLast (firstlements,new)
     return firstlements
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareArtistId(artist1, artist2):
