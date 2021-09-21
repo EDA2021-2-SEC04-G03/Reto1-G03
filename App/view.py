@@ -68,7 +68,7 @@ def printartists(artistas):
             print(' Nombre: ' +artista["DisplayName"] + ' Fecha de inicio: '+ 
                     artista["BeginDate"]+' Fecha fin: '+ artista["EndDate"]+
                   ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"]+
-                  " Obras" + str(artista["Artworks"]) )
+                  " Obras" )
     else:
         print('No se han cargado artistas')
 
@@ -81,6 +81,7 @@ def printobras(obras):
              " Artistas:" + str(obra["Artists"]))       
     else:
         print('No se han cargado obras')
+
 """
 Menu principal
 """
@@ -107,10 +108,16 @@ while True:
         date2 = input("Indique año final (formato YYYY): ")
         listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
         print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
-        print("Primeros 3 artistas")
-        printartists(controller.getFirstxElements(listaEnRango,3))
-        print("Utlimos 3 artistas")
-        printartists(controller.getLastxElements(listaEnRango,3))
+        if lt.size(listaEnRango)>3:
+            primeros= lt.subList(listaEnRango,1,3)
+            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-3,3)
+            print("Utlimos 3 artistas")
+            printartists(ultimos)
+            print("Primeros 3 artistas")
+            printartists(primeros)
+        elif lt.size(listaEnRango)<=3:
+            print("Como solo hay 3 o menos artistas, estos son:")
+            printartists(listaEnRango)
     elif int(inputs[0]) == 3:
         inicial= input("Indique la fecha inicial: ")
         final= input("Indique la fecha final: ")
