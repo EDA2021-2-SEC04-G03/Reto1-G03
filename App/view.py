@@ -123,6 +123,9 @@ while True:
         print("Utlimas 3 obras")
         printobras(controller.getLastxElements(listaEnRango,3))
         #print("Número de obras adquiridas por compra: "+ str(num_purchase))
+    elif int(inputs[0]) == 4:
+        nombre= input("Indique el nombre del artista: ")
+        
     elif int(inputs[0])==5:
         obras=catalog["obras"]
         nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)
@@ -141,9 +144,9 @@ while True:
         ObrasPorPrecio= controller.OrdenarPorPrecio(ObrasporDepartamento)
         print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ lt.size(ObrasporDepartamento))
         print("5 Obras más antiguas a trasportar")
-        printobras(controller.getLastxElements(ObrasPorFecha),5)
+        printobras(controller.getLastxElements(ObrasPorFecha,5))
         print("5 Obras más caras a transportar")
-        printobras(controller.getLastxElements(ObrasPorPrecio),5)
+        printobras(controller.getLastxElements(ObrasPorPrecio,5))
     elif int(inputs[0]) >= 6 :
         print ("Lo sentimos, Requerimiento no disponible")
         pass

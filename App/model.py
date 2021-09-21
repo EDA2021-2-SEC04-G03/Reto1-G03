@@ -25,7 +25,7 @@
  """
 
 
-from DISClib.DataStructures.arraylist import  size
+from DISClib.DataStructures.arraylist import  iterator, newList, size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -142,7 +142,28 @@ def getFirstxElements(lista,number):
         lt.addLast (firstlements,new)
     return firstlements
 
+def ObrasPorArtistaPorTecnica(catalogo,nombre):
+    artistas= catalogo["artistas"]
+    for artista in lt.iterator(artistas):
+        if artista["DisplayName"]== nombre:
+            obrasArtista= artista["Artworks"]
+            Tecnicas={}
+            for obra in lt.iterator(obrasArtista):
+                tecnica= obra["Medium"]
+                if tecnica != "":
+                    if tecnica not in Tecnicas:
+                        Tecnicas[tecnica]={}
+                        Tecnicas[tecnica]["info"]= lt.newList("ARRAY_LIST")
+                        Tecnicas[tecnica]["info"]= lt.addLast(obra)
+                        Tecnicas[tecnica]["conteo"]= 1
+                    else:
+                        Tecnicas[tecnica]["info"]= lt.addLast(obra)
+                        Tecnicas[tecnica]["conteo"]+= 1
 
+            break
+    return (obrasArtista,Tecnicas)    
+    def buscarMayorConteoTecnica():
+        return None
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareArtistId(artist1, artist2):
