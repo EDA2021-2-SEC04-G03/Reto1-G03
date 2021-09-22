@@ -101,9 +101,6 @@ def addObra(catalog, obra):
     codigosArtistas= codigosArtistas.replace("]","")
     codigosArtistas= codigosArtistas.replace(" ","")
     codigosArtistas= codigosArtistas.split(",")
-    print("......")
-    print(str(artwork["ObjectID"]))
-    print(str(codigosArtistas))
     artwork["ConstituentID"]= codigosArtistas
     """
     vamos a hacer la conexión de referencias entre obras y artistas

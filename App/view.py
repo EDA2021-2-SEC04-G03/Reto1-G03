@@ -144,7 +144,11 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
         stop_time = time.process_time()
+        timepaso= stop_time-start_time
+        print("Tiempo transcurrido "+ str(timepaso))
+
     elif int(inputs[0]) == 2:
+        start_time = time.process_time()
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
         listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
@@ -153,7 +157,12 @@ while True:
         else:
             print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
             printPrimerosyUltimosartistas(listaEnRango)
+        stop_time = time.process_time()
+        timepaso= stop_time-start_time
+        print("Tiempo transcurrido "+ str(timepaso))
+
     elif int(inputs[0]) == 3:
+        start_time = time.process_time()
         inicial= input("Indique la fecha inicial: ")
         final= input("Indique la fecha final: ")
         listaOrdenada = controller.sortArtworksByDateAcquired(catalog["obras"])
@@ -165,12 +174,20 @@ while True:
             print("Hay "+ str(lt.size(listaEnRango))+ " obras  entre "+ str(inicial) +" y "+ str(final))
             printPrimerosyUltimosobras(listaEnRango)
             print("Hay "+ str(numPurchased)+ " obras adquiridas por compra")
+        stop_time = time.process_time()
+        timepaso= stop_time-start_time
+        print("Tiempo transcurrido "+ str(timepaso))
         
     elif int(inputs[0]) == 4:
+        start_time = time.process_time()
         nombre= input("Indique el nombre del artista: ")
         (obrasArtista, Tecnicas)= controller.ObrasPorArtistaPorTecnica(catalog,nombre)
         Tecnica= controller.buscarTecnicaMasRep(Tecnicas)
+        stop_time = time.process_time()
+        timepaso= stop_time-start_time
+        print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0])==5:
+        start_time = time.process_time()
         obras=catalog["obras"]
         nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)
         print("El top 10 de los países en el MoMa son: ")
@@ -181,7 +198,11 @@ while True:
             if num==10:
                 break
         print ("La nacionalidad con mayor número de obras: ")
+        stop_time = time.process_time()
+        timepaso= stop_time-start_time
+        print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0])==6:
+        start_time = time.process_time()
         departamento= input("Por favor ingrese el nombre del departamento:") 
         ObrasporDepartamento= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog, departamento)
         ObrasPorFecha= controller.sortArtworksByDateAcquired(ObrasporDepartamento)
@@ -191,6 +212,9 @@ while True:
         printUltimos5obras(ObrasPorFecha," antiguas ")
         print("5 Obras más caras a transportar")
         printUltimos5obras(ObrasPorPrecio," cotosas ")
+        stop_time = time.process_time()
+        timepaso= stop_time-start_time
+        print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0]) >= 6 :
         print ("Lo sentimos, Requerimiento no disponible")
         pass
