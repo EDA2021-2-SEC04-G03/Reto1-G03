@@ -57,12 +57,9 @@ def loadObras(catalog):
         model.addObra(catalog, obra)
 
 # Funciones de ordenamiento
-def sortArtworksByDateAcquired(lista): 
-    return model.sortArtworksByDateAcquired(lista)
-def subslitArtworksInRange(lista,inicial,final):
-    return model.subslitArtworksInRange(lista,inicial,final)
-def NumberOfPurchase (lista_ordenada):
-    return model.NumberOfPurchase(lista_ordenada)
+
+def sortArtworksandRange(lista,inicial,final):
+    return model.sortArtworksandRange(lista,inicial,final)
 
 def sortArtistInDateRange(catalog, date1,date2):
     return model.sortArtistInDateRange(catalog, date1,date2)
