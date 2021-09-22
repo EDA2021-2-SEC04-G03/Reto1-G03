@@ -83,6 +83,7 @@ def addObra(catalog, obra):
     artwork["Medium"]= obra["Medium"]
     artwork["Date"]= obra["Date"]
     artwork["DateAcquired"]= obra["DateAcquired"]
+    artwork["Department"]= obra["Department"]
     artwork["CreditLine"]= obra["CreditLine"]
     artwork["Dimensions"]= obra["Dimensions"]
     artwork["Depth (cm)"]= obra["Depth (cm)"]
@@ -263,10 +264,10 @@ def AsignarPrecio(object):
     #considerar datos vacios revisar reglas#
     m3=-1
     if object["Width (cm)"]!="" and object["Height (cm)"]!="" and object["Depth (cm)"]!="":
-        m3= ((object["width"]/100)*(object["Height"]/100)*(object["Depth"]/100))
+        m3= ((object["Width (cm)"]/100)*(object["Height (cm)"]/100)*(object["Depth (cm)"]/100))
     m2=-1
     if object["Width (cm)"]!="" and object["Height (cm)"]!="":
-        m2=(object["width"]/100)*(object["Height"]/100)
+        m2=(object["Width (cm)"]/100)*(object["Height (cm)"]/100)
     kg=object["Weight (kg)"]
     precio=-1
     if kg!="" and m3!=-1 and m2!=-1:
