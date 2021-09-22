@@ -72,7 +72,7 @@ def printartists(artistas, incluirObras):
                   ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"])
             if incluirObras:
                 obras=artista["Artworks"]
-                if lt.size(obras)>0:
+                if lt.isEmpty(obras)==False:
                     print("    Obras del artista:")
                     printobras(obras)
                 else:
@@ -152,7 +152,7 @@ while True:
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
         listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
-        if lt.size(listaEnRango)==0:
+        if lt.isEmpty(listaEnRango):
             print("No hay artistas nacidos en el rango")
         else:
             print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
@@ -168,7 +168,7 @@ while True:
         listaOrdenada = controller.sortArtworksByDateAcquired(catalog["obras"])
         listaEnRango= controller.subslitArtworksInRange(listaOrdenada,inicial,final)
         numPurchased= 0 ###TODO#############
-        if lt.size(listaEnRango)==0:
+        if lt.isEmpty(listaEnRango):
             print("No hay obras en el rango")
         else:
             print("Hay "+ str(lt.size(listaEnRango))+ " obras  entre "+ str(inicial) +" y "+ str(final))
