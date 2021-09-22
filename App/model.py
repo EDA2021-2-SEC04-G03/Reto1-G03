@@ -25,6 +25,7 @@
  """
 
 
+from App.view import ObrasporDepartamento
 from DISClib.DataStructures.arraylist import  iterator, newList, size
 import config as cf
 from DISClib.ADT import list as lt
@@ -242,42 +243,88 @@ def NumberOfPurchase (lista_ordenada):
     
 def RankingCountriesByArtworks (catalog,obras):
     #req4
-    lista_obras= catalog["obras"]
-    dict_obras={}
     lista_artistas=catalog["artistas"]
-    for i in range (lt.size(obras)):
-        for n in range (lt.size(lista_obras)):
-            if obras[i]==lista_obras[n]["Título"]:
-                dict_obras[obras[i]]=lista_obras[n]["ConstituentID"]
-    dict_nacionalidades={}
-    for valor in dict_obras.values:
-       for j in range(lt.size(lista_artistas)):
-           pos=lista_artistas[j]
-           if valor== pos["ConstituentID"]:
-               nacionalidad=pos["nacionalidad"]
-               if nacionalidad not in dict_nacionalidades:
-                   dict_nacionalidades[nacionalidad]=1
-               else:
-                   dict_nacionalidades[nacionalidad]+=1
-    dict_ordenado=sorted(dict_nacionalidades.items(),key=operator.itemgetter(1), reverse=True)
-    return (dict_ordenado)
+    dict_nacionalidades= {}
+    for i in obras:
+        for n in lt.iterator(lista_artistas):
+            if i in n["Artworks"]:
+                nacionalidad= n["Nationality"]
+                if nacionalidad not in dict_nacionalidades:
+                    dict_nacionalidades[nacionalidad]=1
+                else:
+                    dict_nacionalidades[nacionalidad]+=1
+    
+        
+    return ()
 
 
 #Requisito 5#
-def AsignarPrecio(artwork):
+def AsignarPrecio(object):
     #considerar datos vacios revisar reglas#
-    return None
-def AsignarPeso(artwork):
+    m3=-1
+    if object["Width (cm)"]!="" and object["Height (cm)"]!="" and object["Depth (cm)"]!="":
+        m3= ((object["width"]/100)*(object["Height"]/100)*(object["Depth"]/100))
+    m2=-1
+    if object["Width (cm)"]!="" and object["Height (cm)"]!="":
+        m2=(object["width"]/100)*(object["Height"]/100)
+    kg=object["Weight (kg)"]
+    precio=-1
+    if kg!="" and m3!=-1 and m2!=-1:
+        if  72000*kg> precio:
+            precio= 72000*kg
+        if 72000*m3>precio:
+            precio=72000*m3
+        if 72000*m2>precio:
+            precio=72000*m2
+    elif kg!="" and m3!=-1 and m2==-1:
+        if  72000*kg> precio:
+            precio= 72000*kg
+        if 72000*m3>precio:
+            precio=72000*m3
+    elif kg!="" and m2!=-1 and m3==-1:
+        if  72000*kg> precio:
+            precio= 72000*kg
+        if 72000*m2>precio:
+            precio=72000*m2
+    elif kg=="" and m2!=-1  and 3!=-1:
+        if 72000*m2>precio:
+            precio=72000*m2
+        if 72000*m3>precio:
+            precio=72000*m2
+    else:
+        precio= 48000
+    return precio
+
+def AsignarPesoTotal(lista_artwork):
     #considerar datos vacios revisar reglas#
-    return None
+    peso=0
+    for i in lt.iterator(lista_artwork):
+        peso+=i["Weight (kg)"]
+    return peso
+
+def AsignarPrecioTotal(lista_artwork):
+    #considerar datos vacios revisar reglas#
+    precio=0
+    for i in lt.iterator(lista_artwork):
+        precio+=i["precio"]
+    return precio
+
 def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
     obrasPorDepartamento= lt.newList()
-    #recorrido que revise el departamento y añada la obra a la lista si es el dep y asigna precio#
+    lista_artwork= catalogo["Artistas"]
+    for i in lt.iterator (lista_artwork):
+        if i["Department"]== departamento:
+            i["precio"]=AsignarPrecio(i)
+            lt.addLast(ObrasporDepartamento,i)
     return obrasPorDepartamento
+
 def cmpArtworkPorPrecio(Artwork1,Artwork2):
-    return None
+    precio1=Artwork1["precio"]
+    precio2=Artwork2["precio"]
+    return precio1< precio2
+    
 def OrdenarPorPrecio(lista):
-    return None 
+    return me.sort(lista,cmpArtworkPorPrecio)
 
 
 
