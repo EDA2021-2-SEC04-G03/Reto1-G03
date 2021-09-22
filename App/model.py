@@ -242,9 +242,7 @@ def RankingCountriesByArtworks (catalog,obras):
                     dict_nacionalidades[nacionalidad]=1
                 else:
                     dict_nacionalidades[nacionalidad]+=1
-    
-        
-    return ()
+    return (dict_nacionalidades)
 
 
 #Requisito 5#
@@ -284,35 +282,30 @@ def AsignarPrecio(object):
         precio= 48000
     return precio
 
-def AsignarPesoTotal(lista_artwork):
-    #considerar datos vacios revisar reglas#
-    peso=0
-    for i in lt.iterator(lista_artwork):
-        peso+=i["Weight (kg)"]
-    return peso
-
-def AsignarPrecioTotal(lista_artwork):
-    #considerar datos vacios revisar reglas#
-    precio=0
-    for i in lt.iterator(lista_artwork):
-        precio+=i["precio"]
-    return precio
-
 def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
     obrasPorDepartamento= lt.newList()
-    lista_artwork= catalogo["Artistas"]
+    lista_artwork= catalogo["artistas"]
+    dict_rta={}
+    precio=0
+    peso=0
     for i in lt.iterator (lista_artwork):
         if i["Department"]== departamento:
             i["precio"]=AsignarPrecio(i)
-            lt.addLast(ObrasporDepartamento,i)
-    return obrasPorDepartamento
+            lt.addLast(obrasPorDepartamento,i)
+            precio+=i["precio"]
+            peso+=i["Weight (kg)"]
+    dict_rta["Peso Total"]=peso
+    dict_rta["Precio Total"]=precio
+    dict_rta["lista artworks"]=obrasPorDepartamento
+    return dict_rta
 
 def cmpArtworkPorPrecio(Artwork1,Artwork2):
     precio1=Artwork1["precio"]
     precio2=Artwork2["precio"]
     return precio1< precio2
     
-def OrdenarPorPrecio(lista):
+def OrdenarPorPrecio(dict_rta):
+    lista=dict_rta["lista artworks"]
     return me.sort(lista,cmpArtworkPorPrecio)
 
 

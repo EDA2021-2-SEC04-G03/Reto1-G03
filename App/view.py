@@ -204,27 +204,25 @@ while True:
         nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)
         print("El top 10 de los países en el MoMa son: ")
         num=0
-        for i in nacionalidades:
-            print(str(i)+ ":"+ str(nacionalidades[i]))
-            num+=1
-            if num==10:
-                break
-        print ("La nacionalidad con mayor número de obras: ")
+        #for i in nacionalidades:
+            #print(str(i)+ ":"+ str(nacionalidades[i]))
+            #num+=1
+            #if num==10:
+                #break
+        print (nacionalidades)
         stop_time = time.process_time()
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0])==6:
         start_time = time.process_time()
         departamento= input("Por favor ingrese el nombre del departamento:") 
-        ObrasporDepartamento= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog, departamento)
-        ObrasPorFecha= controller.sortArtworksByDateAcquired(ObrasporDepartamento)
-        ObrasPorPrecio= controller.OrdenarPorPrecio(ObrasporDepartamento)
-        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ lt.size(ObrasporDepartamento))
-        print("5 Obras más antiguas a trasportar")
-        printUltimos5obras(ObrasPorFecha," antiguas ")
-        print("5 Obras más caras a transportar")
-        printUltimos5obras(ObrasPorPrecio," cotosas ")
-        stop_time = time.process_time()
+        dict_rta= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog,departamento)
+        peso_total= dict_rta["Peso Total"]
+        precio_total=dict_rta["Precio Total"]
+        listaConDeptos= dict_rta["lista artworks"]
+        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ lt.size(listaConDeptos))
+        print ("El estimado en USD del precio de servicio es de "+str(precio_total))
+        print("El peso estimado de las obras es de "+ str(peso_total))
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0]) >= 6 :
