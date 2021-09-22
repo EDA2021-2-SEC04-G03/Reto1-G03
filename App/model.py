@@ -126,7 +126,7 @@ def buscarTecnicaMasRep(dicTecnicas):
         TecnicaMas= " "
         size_mayor=0
         for tecnica in dicTecnicas:
-            size= lt.size(tecnica["Nombre"])
+            size= lt.size(dicTecnicas[tecnica]["obras"])
             if size>size_mayor:
                 size_mayor= size
                 TecnicaMas= tecnica
@@ -134,25 +134,21 @@ def buscarTecnicaMasRep(dicTecnicas):
 def ObrasPorArtistaPorTecnica(catalogo,nombre):
     artistas= catalogo["artistas"]
     for artista in lt.iterator(artistas):
-        print("o")
-        if nombre in artista["DisplayName"]:
-            print("si")
+        if nombre == artista["DisplayName"]:
             obrasArtista= artista["Artworks"]
             Tecnicas={}
             if lt.size(obrasArtista)> 0: 
-                print("si")
                 for obra in lt.iterator(obrasArtista):
                     tecnica= obra["Medium"]
                     if tecnica != "":
-                        print("1")
                         if tecnica not in Tecnicas:
-                            print("2")
                             Tecnicas[tecnica]={}
-                            Tecnicas[tecnica]["Nombre"]= tecnica
+                            Tecnicas[tecnica]["nombre"]= tecnica
                             Tecnicas[tecnica]["obras"]= lt.newList("ARRAY_LIST")
-                            Tecnicas[tecnica]["obras"]= lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                            lt.addLast(Tecnicas[tecnica]["obras"],obra)
                         else:
-                            Tecnicas[tecnica]["obras"]= lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                            lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                break
         else:
             obrasArtista=None
             Tecnicas=None
@@ -216,32 +212,25 @@ def sortArtistInDateRange(catalog, date1,date2):
             lt.addLast(listaEnRango, i)
     return (listaEnRango)
 
-def sortArtworksByDateAcquired(lista):
-    sub_list =(lista)
-    lista_ordenada= ins.sort(sub_list,cmpArtworkByDateAcquired)
-    return lista_ordenada
-
-def subslitArtworksInRange(lista,inicial,final):
+def sortArtworksandRange(lista,inicial,final):
     inicial=datetime.strptime(str(inicial),"%Y-%m-%d")
     final=datetime.strptime(str(final),"%Y-%m-%d")
-    final_list= lt.newList("ARRAY_LIST")
+    listaEnRango= lt.newList("ARRAY_LIST")
+    purchased=0
     for i in lt.iterator(lista):
         date=i['DateAcquired']
         if date=="":
             date="0001-01-01"
         date_format=datetime.strptime(str(date),"%Y-%m-%d")
         if date_format<= final and date_format>=inicial:
-                lt.addLast(final_list,i)
-    return (final_list)
+                lt.addLast(listaEnRango,i)
+                credit_line= i["CreditLine"]
+                if "Purchase" in credit_line or "Purchased" in credit_line :
+                    purchased+=1
+    lista_ordenada= ins.sort(listaEnRango,cmpArtworkByDateAcquired)
+    return (lista_ordenada,purchased)
 
-def NumberOfPurchase (lista_ordenada):
-    num_purchase=0
-    for n in lt.iterator(lista_ordenada):
-        credit_line= n["Creditline"]
-        if credit_line=="Purchase":
-            num_purchase+=1
-    return num_purchase
-    
+   
 def RankingCountriesByArtworks (catalog,obras):
     #req4
     lista_artistas=catalog["artistas"]

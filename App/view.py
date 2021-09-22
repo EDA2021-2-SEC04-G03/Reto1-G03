@@ -72,25 +72,31 @@ def printartists(artistas, incluirObras):
                   ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"])
             if incluirObras:
                 obras=artista["Artworks"]
-                if lt.size(obras)>0:
+                if lt.isEmpty(obras)==False:
                     print("    Obras del artista:")
-                    printobras(obras)
+                    printobras(obras,False)
                 else:
                     print("No")
     else:
         print('No se han cargado artistas')
 
-def printobras(obras):
+def printobras(obras,incluir):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
             print("--------------------------------------------")
             print( ' Título: ' + obra["Title"] + ' Fecha: ' + obra["DateAcquired"] +
-             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] +
-             " Artistas:" )
+             ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"])
+            if incluir:
+                artistas=obra["Artists"]
+                if lt.isEmpty(artistas)==False:
+                    print(" Artista(s) de la Obra:")
+                    printartists(artistas,False)
+                else:
+                    print("No")
     else:
         print('No se han cargado obras')
-def printPrimerosyUltimosartistas(lista):
+def printPrimerosyUltimosartistas(listaEnRango):
     if lt.size(listaEnRango)>3:
             primeros= lt.subList(listaEnRango,1,3)
             ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-2,3)
@@ -102,24 +108,24 @@ def printPrimerosyUltimosartistas(lista):
             print("Como solo hay 3 o menos artistas, estos son:")
             printartists(listaEnRango,False)
 def printPrimerosyUltimosobras(lista):
-    if lt.size(listaEnRango)>3:
-            primeros= lt.subList(listaEnRango,1,3)
-            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-2,3)
+    if lt.size(lista)>3:
+            primeros= lt.subList(lista,1,3)
+            ultimos= lt.subList(lista,lt.size(lista)-2,3)
             print("\n* Primeras 3 obras ")
-            printobras(primeros)
+            printobras(primeros,True)
             print("\n* Utlimos 3 obras ")
-            printobras(ultimos)
-    elif lt.size(listaEnRango)<=3:
+            printobras(ultimos,True)
+    elif lt.size(lista)<=3:
             print("Como solo hay 3 o menos obras, estas son:")
-            printobras(listaEnRango)
+            printobras(lista,True)
 def printUltimos5obras(lista,tipo):
-    if lt.size(listaEnRango)>5:
-            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-4,5)
+    if lt.size(lista)>5:
+            ultimos= lt.subList(lista,lt.size(lista)-4,5)
             print("Obras más "+str(tipo))
-            printobras(ultimos)
-    elif lt.size(listaEnRango)<=5:
+            printobras(ultimos,True)
+    elif lt.size(lista)<=5:
             print("Como solo hay 5 o menos obras, estos son:")
-            printobras(listaEnRango)
+            printobras(lista,True)
 
 """
 Menu principal
@@ -152,7 +158,7 @@ while True:
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
         listaEnRango= controller.sortArtistInDateRange(catalog,date1,date2)
-        if lt.size(listaEnRango)==0:
+        if lt.isEmpty(listaEnRango):
             print("No hay artistas nacidos en el rango")
         else:
             print("Hay "+ str(lt.size(listaEnRango))+ " artistas que nacieron entre "+ str(date1) +" y "+ str(date2))
@@ -165,14 +171,12 @@ while True:
         start_time = time.process_time()
         inicial= input("Indique la fecha inicial: ")
         final= input("Indique la fecha final: ")
-        listaOrdenada = controller.sortArtworksByDateAcquired(catalog["obras"])
-        listaEnRango= controller.subslitArtworksInRange(listaOrdenada,inicial,final)
-        numPurchased= 0 ###TODO#############
-        if lt.size(listaEnRango)==0:
+        (lista,numPurchased) = (controller.sortArtworksandRange(catalog["obras"],inicial,final))
+        if lt.isEmpty(lista):
             print("No hay obras en el rango")
         else:
-            print("Hay "+ str(lt.size(listaEnRango))+ " obras  entre "+ str(inicial) +" y "+ str(final))
-            printPrimerosyUltimosobras(listaEnRango)
+            print("Hay "+ str(lt.size(lista))+ " obras  entre "+ str(inicial) +" y "+ str(final))
+            printPrimerosyUltimosobras(lista)
             print("Hay "+ str(numPurchased)+ " obras adquiridas por compra")
         stop_time = time.process_time()
         timepaso= stop_time-start_time
@@ -182,7 +186,14 @@ while True:
         start_time = time.process_time()
         nombre= input("Indique el nombre del artista: ")
         (obrasArtista, Tecnicas)= controller.ObrasPorArtistaPorTecnica(catalog,nombre)
-        Tecnica= controller.buscarTecnicaMasRep(Tecnicas)
+        if Tecnicas != None and obrasArtista!= None:
+            Tecnica= controller.buscarTecnicaMasRep(Tecnicas)
+            print(str(nombre)+ " tiene un total de: "+ str(lt.size(obrasArtista))+" obras.")
+            print("La tecnica más utilizada es: "+ str(Tecnicas[Tecnica]["nombre"])+". Con "+str(lt.size(Tecnicas[Tecnica]["obras"]))+" obras.")
+            print("El listado de obras es: ")
+            printobras((Tecnicas[Tecnica]["obras"]),False)
+        else:
+            print("Entrada invalida")
         stop_time = time.process_time()
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))
