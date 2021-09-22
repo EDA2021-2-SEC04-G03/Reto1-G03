@@ -124,7 +124,7 @@ def buscarTecnicaMasRep(dicTecnicas):
         TecnicaMas= " "
         size_mayor=0
         for tecnica in dicTecnicas:
-            size= lt.size(tecnica["Nombre"])
+            size= lt.size(dicTecnicas[tecnica]["obras"])
             if size>size_mayor:
                 size_mayor= size
                 TecnicaMas= tecnica
@@ -132,25 +132,21 @@ def buscarTecnicaMasRep(dicTecnicas):
 def ObrasPorArtistaPorTecnica(catalogo,nombre):
     artistas= catalogo["artistas"]
     for artista in lt.iterator(artistas):
-        print("o")
         if nombre in artista["DisplayName"]:
-            print("si")
             obrasArtista= artista["Artworks"]
             Tecnicas={}
             if lt.size(obrasArtista)> 0: 
-                print("si")
                 for obra in lt.iterator(obrasArtista):
                     tecnica= obra["Medium"]
                     if tecnica != "":
-                        print("1")
                         if tecnica not in Tecnicas:
-                            print("2")
                             Tecnicas[tecnica]={}
-                            Tecnicas[tecnica]["Nombre"]= tecnica
+                            Tecnicas[tecnica]["nombre"]= tecnica
                             Tecnicas[tecnica]["obras"]= lt.newList("ARRAY_LIST")
-                            Tecnicas[tecnica]["obras"]= lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                            lt.addLast(Tecnicas[tecnica]["obras"],obra)
                         else:
-                            Tecnicas[tecnica]["obras"]= lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                            lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                break
         else:
             obrasArtista=None
             Tecnicas=None
