@@ -25,7 +25,6 @@
  """
 
 
-from App.view import ObrasporDepartamento
 from DISClib.DataStructures.arraylist import  iterator, newList, size
 import config as cf
 from DISClib.ADT import list as lt
@@ -224,8 +223,8 @@ def sortArtworksandRange(lista,inicial,final):
         date_format=datetime.strptime(str(date),"%Y-%m-%d")
         if date_format<= final and date_format>=inicial:
                 lt.addLast(listaEnRango,i)
-                credit_line= i["CreditLine"]
-                if "Purchase" in credit_line or "Purchased" in credit_line :
+                credit_line= str(i["CreditLine"]).lower()
+                if ("Purchase").lower() in credit_line or ("Purchased").lower() in credit_line :
                     purchased+=1
     lista_ordenada= ins.sort(listaEnRango,cmpArtworkByDateAcquired)
     return (lista_ordenada,purchased)

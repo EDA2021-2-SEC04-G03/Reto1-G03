@@ -176,8 +176,9 @@ while True:
             print("No hay obras en el rango")
         else:
             print("Hay "+ str(lt.size(lista))+ " obras  entre "+ str(inicial) +" y "+ str(final))
-            printPrimerosyUltimosobras(lista)
             print("Hay "+ str(numPurchased)+ " obras adquiridas por compra")
+            printPrimerosyUltimosobras(lista)
+            
         stop_time = time.process_time()
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))
