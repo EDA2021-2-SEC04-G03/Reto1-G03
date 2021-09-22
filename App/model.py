@@ -117,8 +117,6 @@ def addObra(catalog, obra):
         for artista in lt.iterator(catalog["artistas"]):
             IDArtista=(artista["ConstituentID"]).replace(" ","")
             IDArtista= int(IDArtista)
-            if ID == 339:
-                print(str(IDArtista))
             if ID == IDArtista:
                 #print(str(ID)+ " " + str(IDArtista))
                 lt.addLast(artista["Artworks"],artwork)
@@ -127,7 +125,15 @@ def addObra(catalog, obra):
     lt.addLast(catalog['obras'], artwork)
 
 # Funciones de consulta
-
+def buscarTecnicaMasRep(dicTecnicas):
+        TecnicaMas= " "
+        size_mayor=0
+        for tecnica in dicTecnicas:
+            size= lt.size(tecnica["Nombre"])
+            if size>size_mayor:
+                size_mayor= size
+                TecnicaMas= tecnica
+        return TecnicaMas
 def ObrasPorArtistaPorTecnica(catalogo,nombre):
     artistas= catalogo["artistas"]
     for artista in lt.iterator(artistas):
@@ -154,16 +160,7 @@ def ObrasPorArtistaPorTecnica(catalogo,nombre):
             obrasArtista=None
             Tecnicas=None
     return (obrasArtista,Tecnicas) 
-   
-    def buscarTecnicaMasRep(dicTecnicas):
-        TecnicaMas= " "
-        size_mayor=0
-        for tecnica in dicTecnicas:
-            size= lt.size(tecnica["Nombre"])
-            if size>size_mayor:
-                size_mayor= size
-                TecnicaMas= tecnica
-        return TecnicaMas
+ 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareArtistId(artist1, artist2):
