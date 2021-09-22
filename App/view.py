@@ -25,6 +25,8 @@ import sys
 import controller
 from datetime import datetime
 from DISClib.ADT import list as lt
+from datetime import datetime
+import time
 assert cf
 default_limit = 1000
 sys.setrecursionlimit(default_limit*10)
@@ -61,14 +63,21 @@ def loadData(catalog):
     return controller.loadData(catalog)
 
 #Funciones para imprimir#
-def printartists(artistas):
+def printartists(artistas, incluirObras):
     size = lt.size(artistas)
     if size:
         for artista in lt.iterator(artistas):
+            print("____________________________________________---")
             print(' Nombre: ' +artista["DisplayName"] + ' Fecha de inicio: '+ 
                     artista["BeginDate"]+' Fecha fin: '+ artista["EndDate"]+
-                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"]+
-                  " Obras" )
+                  ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"])
+            if incluirObras:
+                obras=artista["Artworks"]
+                if lt.size(obras)>0:
+                    print("    Obras del artista:")
+                    printobras(obras)
+                else:
+                    print("No")
     else:
         print('No se han cargado artistas')
 
@@ -76,6 +85,7 @@ def printobras(obras):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
+            print("--------------------------------------------")
             print( ' Título: ' + obra["Title"] + ' Fecha: ' + obra["DateAcquired"] +
              ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"] +
              " Artistas:" )
@@ -85,32 +95,32 @@ def printPrimerosyUltimosartistas(lista):
     if lt.size(listaEnRango)>3:
             primeros= lt.subList(listaEnRango,1,3)
             ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-2,3)
-            print("Primeros 3 artisas")
-            printartists(primeros)
-            print("Utlimos 3 artisas")
-            printartists(ultimos)
+            print("\n* Primeros 3 artisas")
+            printartists(primeros,True)
+            print("\n* Utlimos 3 artisas")
+            printartists(ultimos,False)
     elif lt.size(listaEnRango)<=3:
             print("Como solo hay 3 o menos artistas, estos son:")
-            printartists(listaEnRango)
+            printartists(listaEnRango,False)
 def printPrimerosyUltimosobras(lista):
     if lt.size(listaEnRango)>3:
             primeros= lt.subList(listaEnRango,1,3)
             ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-2,3)
-            print("Primeras 3 obras ")
+            print("\n* Primeras 3 obras ")
             printobras(primeros)
-            print("Utlimos 3 obras ")
+            print("\n* Utlimos 3 obras ")
             printobras(ultimos)
     elif lt.size(listaEnRango)<=3:
             print("Como solo hay 3 o menos obras, estas son:")
             printobras(listaEnRango)
 def printUltimos5obras(lista,tipo):
     if lt.size(listaEnRango)>5:
-            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-3,3)
+            ultimos= lt.subList(listaEnRango,lt.size(listaEnRango)-4,5)
             print("Obras más "+str(tipo))
             printobras(ultimos)
     elif lt.size(listaEnRango)<=5:
-            print("Como solo hay 5 o menos "+str(tipo)+", estos son:")
-            printartists(listaEnRango)
+            print("Como solo hay 5 o menos obras, estos son:")
+            printobras(listaEnRango)
 
 """
 Menu principal
@@ -120,6 +130,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        start_time = time.process_time()
         estructura= input('Seleccione una opción:\n 1.ARRAY_LIST\n 2.LINKED_LIST\n')
         if int(estructura)== 1:
             estructura="ARRAY_LIST"
@@ -133,6 +144,7 @@ while True:
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
+        stop_time = time.process_time()
     elif int(inputs[0]) == 2:
         date1 = input("Indique año inicial (formato YYYY): ")
         date2 = input("Indique año final (formato YYYY): ")
@@ -157,7 +169,8 @@ while True:
         
     elif int(inputs[0]) == 4:
         nombre= input("Indique el nombre del artista: ")
-        
+        (obrasArtista, Tecnicas)= controller.ObrasPorArtistaPorTecnica(catalog,nombre)
+        Tecnica= controller.buscarTecnicaMasRep(Tecnicas)
     elif int(inputs[0])==5:
         obras=catalog["obras"]
         nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)

@@ -101,8 +101,10 @@ def addObra(catalog, obra):
     codigosArtistas= codigosArtistas.replace("]","")
     codigosArtistas= codigosArtistas.replace(" ","")
     codigosArtistas= codigosArtistas.split(",")
+    print("......")
+    print(str(artwork["ObjectID"]))
+    print(str(codigosArtistas))
     artwork["ConstituentID"]= codigosArtistas
-
     """
     vamos a hacer la conexión de referencias entre obras y artistas
     al artista se le adiciona la info de la obra a la lista artworks
@@ -110,11 +112,15 @@ def addObra(catalog, obra):
     """
     #TODO pregunta cupi#
     for ID in codigosArtistas:
+        print(ID)
         ID= int(ID)
         for artista in lt.iterator(catalog["artistas"]):
             IDArtista=(artista["ConstituentID"]).replace(" ","")
             IDArtista= int(IDArtista)
+            if ID == 339:
+                print(str(IDArtista))
             if ID == IDArtista:
+                #print(str(ID)+ " " + str(IDArtista))
                 lt.addLast(artista["Artworks"],artwork)
                 lt.addLast(artwork["Artists"],artista)
                 
@@ -125,25 +131,39 @@ def addObra(catalog, obra):
 def ObrasPorArtistaPorTecnica(catalogo,nombre):
     artistas= catalogo["artistas"]
     for artista in lt.iterator(artistas):
-        if artista["DisplayName"]== nombre:
+        print("o")
+        if nombre in artista["DisplayName"]:
+            print("si")
             obrasArtista= artista["Artworks"]
             Tecnicas={}
-            for obra in lt.iterator(obrasArtista):
-                tecnica= obra["Medium"]
-                if tecnica != "":
-                    if tecnica not in Tecnicas:
-                        Tecnicas[tecnica]={}
-                        Tecnicas[tecnica]["info"]= lt.newList("ARRAY_LIST")
-                        Tecnicas[tecnica]["info"]= lt.addLast(obra)
-                        Tecnicas[tecnica]["conteo"]= 1
-                    else:
-                        Tecnicas[tecnica]["info"]= lt.addLast(obra)
-                        Tecnicas[tecnica]["conteo"]+= 1
-
-            break
-    return (obrasArtista,Tecnicas)    
-    def buscarMayorConteoTecnica():
-        return None
+            if lt.size(obrasArtista)> 0: 
+                print("si")
+                for obra in lt.iterator(obrasArtista):
+                    tecnica= obra["Medium"]
+                    if tecnica != "":
+                        print("1")
+                        if tecnica not in Tecnicas:
+                            print("2")
+                            Tecnicas[tecnica]={}
+                            Tecnicas[tecnica]["Nombre"]= tecnica
+                            Tecnicas[tecnica]["obras"]= lt.newList("ARRAY_LIST")
+                            Tecnicas[tecnica]["obras"]= lt.addLast(Tecnicas[tecnica]["obras"],obra)
+                        else:
+                            Tecnicas[tecnica]["obras"]= lt.addLast(Tecnicas[tecnica]["obras"],obra)
+        else:
+            obrasArtista=None
+            Tecnicas=None
+    return (obrasArtista,Tecnicas) 
+   
+    def buscarTecnicaMasRep(dicTecnicas):
+        TecnicaMas= " "
+        size_mayor=0
+        for tecnica in dicTecnicas:
+            size= lt.size(tecnica["Nombre"])
+            if size>size_mayor:
+                size_mayor= size
+                TecnicaMas= tecnica
+        return TecnicaMas
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareArtistId(artist1, artist2):
@@ -193,18 +213,15 @@ def sortArtistInDateRange(catalog, date1,date2):
     # req1
     date1 = int(date1)
     date2 = int(date2)
-    #primero ordeno toda la lista#
-    start_time = time.process_time()
+    #primero ordeno la lista#
     listaOrdenada= me.sort((catalog['artistas']),cmpArtistByDate)
     listaEnRango = lt.newList("ARRAY_LIST") #porque luego se accede por pos#s
     for i in lt.iterator(listaOrdenada):
         date= int(i['BeginDate'])
         if date != 0 and date >= date1 and date<=date2:
             lt.addLast(listaEnRango, i)
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000   
     return (listaEnRango)
-    
+
 def sortArtworksByDateAcquired(lista):
     sub_list =(lista)
     lista_ordenada= ins.sort(sub_list,cmpArtworkByDateAcquired)

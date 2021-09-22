@@ -70,7 +70,11 @@ def sortArtistInDateRange(catalog, date1,date2):
 def RankingCountriesByArtworks(catalog,obras):
     return model.RankingCountriesByArtworks(catalog,obras)
 # Funciones de consulta sobre el catálogo
-
+def ObrasPorArtistaPorTecnica(catalogo,nombre):
+    return model.ObrasPorArtistaPorTecnica(catalogo,nombre)
+def buscarTecnicaMasRep(dicTecnicas):
+    return model.buscarTecnicaMasRep(dicTecnicas)
+    
 #Funciones requerimeinto 5#
 def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
     ObrasPorDepartamento= model.OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento)
