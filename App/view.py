@@ -47,7 +47,6 @@ def printMenu():
     print("4-Clasificar las obras de un artista por técnica")
     print("5-Clasificar las obras por la nacionalidad de sus creadores ")
     print("6-Transportar obras de un departamento ")
-    print("7-Proponer una nueva exposición en el museo ")
     print("0-Salir ")
  
 def initCatalog(estructura):

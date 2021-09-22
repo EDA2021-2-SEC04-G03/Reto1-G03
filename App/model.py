@@ -112,13 +112,11 @@ def addObra(catalog, obra):
     """
     #TODO pregunta cupi#
     for ID in codigosArtistas:
-        print(ID)
         ID= int(ID)
         for artista in lt.iterator(catalog["artistas"]):
             IDArtista=(artista["ConstituentID"]).replace(" ","")
             IDArtista= int(IDArtista)
             if ID == IDArtista:
-                #print(str(ID)+ " " + str(IDArtista))
                 lt.addLast(artista["Artworks"],artwork)
                 lt.addLast(artwork["Artists"],artista)
                 
