@@ -250,50 +250,45 @@ def AsignarPrecio(object):
     #considerar datos vacios revisar reglas#
     m3=-1
     if object["Width (cm)"]!="" and object["Height (cm)"]!="" and object["Depth (cm)"]!="":
-        m3= ((object["Width (cm)"]/100)*(object["Height (cm)"]/100)*(object["Depth (cm)"]/100))
+        m3= ((float(object["Width (cm)"]))*(float(object["Height (cm)"]))*(float(object["Depth (cm)"])))
+        m3= m3/1000000
     m2=-1
     if object["Width (cm)"]!="" and object["Height (cm)"]!="":
-        m2=(object["Width (cm)"]/100)*(object["Height (cm)"]/100)
-    kg=object["Weight (kg)"]
+        m2=(float(object["Width (cm)"]))*(float(object["Height (cm)"]))
+        m2=m2/10000
     precio=-1
-    if kg!="" and m3!=-1 and m2!=-1:
-        if  72000*kg> precio:
-            precio= 72000*kg
-        if 72000*m3>precio:
-            precio=72000*m3
-        if 72000*m2>precio:
-            precio=72000*m2
-    elif kg!="" and m3!=-1 and m2==-1:
-        if  72000*kg> precio:
-            precio= 72000*kg
-        if 72000*m3>precio:
-            precio=72000*m3
-    elif kg!="" and m2!=-1 and m3==-1:
-        if  72000*kg> precio:
-            precio= 72000*kg
-        if 72000*m2>precio:
-            precio=72000*m2
-    elif kg=="" and m2!=-1  and 3!=-1:
-        if 72000*m2>precio:
-            precio=72000*m2
-        if 72000*m3>precio:
-            precio=72000*m2
-    else:
-        precio= 48000
-    return precio
+    preciom3= 0
+    preciom2= 0
+    precioKg= 0
+    if object["Weight (kg)"] != "":
+        precioKg= 72* float(object["Weight (kg)"])
+    if m3>=0.000000000000000001:
+        preciom3= 72* float(m3)
+    if m2>=0.000000000000000001:
+        preciom2= 72* float(m2)
+    if preciom3 ==0 and preciom2==0 and precioKg==0:
+        precio=48
+    elif preciom2> preciom3 and preciom2> precioKg:
+        precio= preciom2
+    elif preciom3> preciom2 and preciom3> precioKg:
+        precio= preciom3
+    elif precioKg> preciom2 and precioKg> preciom3:
+        precio= precioKg 
+    return (precio)
 
 def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
     obrasPorDepartamento= lt.newList()
-    lista_artwork= catalogo["artistas"]
+    lista_artwork= catalogo["obras"]
     dict_rta={}
     precio=0
     peso=0
-    for i in lt.iterator (lista_artwork):
-        if i["Department"]== departamento:
-            i["precio"]=AsignarPrecio(i)
-            lt.addLast(obrasPorDepartamento,i)
-            precio+=i["precio"]
-            peso+=i["Weight (kg)"]
+    for obra in lt.iterator (lista_artwork):
+        if obra["Department"]== departamento:
+            obra["precio"]=AsignarPrecio(obra)
+            lt.addLast(obrasPorDepartamento,obra)
+            precio+=float(obra["precio"])
+            if obra["Weight (kg)"] != "":
+                peso+=float(obra["Weight (kg)"])
     dict_rta["Peso Total"]=peso
     dict_rta["Precio Total"]=precio
     dict_rta["lista artworks"]=obrasPorDepartamento

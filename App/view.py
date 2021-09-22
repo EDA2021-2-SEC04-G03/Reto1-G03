@@ -220,7 +220,7 @@ while True:
         peso_total= dict_rta["Peso Total"]
         precio_total=dict_rta["Precio Total"]
         listaConDeptos= dict_rta["lista artworks"]
-        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ lt.size(listaConDeptos))
+        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ str(lt.size(listaConDeptos)))
         print ("El estimado en USD del precio de servicio es de "+str(precio_total))
         print("El peso estimado de las obras es de "+ str(peso_total))
         timepaso= stop_time-start_time
