@@ -262,9 +262,9 @@ def AsignarPrecio(object):
     precioKg= 0
     if object["Weight (kg)"] != "":
         precioKg= 72* float(object["Weight (kg)"])
-    if m3>=0.000000000000000001:
+    if m3>0:
         preciom3= 72* float(m3)
-    if m2>=0.000000000000000001:
+    if m2>0:
         preciom2= 72* float(m2)
     if preciom3 ==0 and preciom2==0 and precioKg==0:
         precio=48
@@ -279,7 +279,7 @@ def AsignarPrecio(object):
 def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
     obrasPorDepartamento= lt.newList()
     lista_artwork= catalogo["obras"]
-    dict_rta={}
+    listaR = lt.newList("ARRAY_LIST") #la lista R va a tener peso,precio,listaobras#
     precio=0
     peso=0
     for obra in lt.iterator (lista_artwork):
@@ -289,10 +289,10 @@ def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
             precio+=float(obra["precio"])
             if obra["Weight (kg)"] != "":
                 peso+=float(obra["Weight (kg)"])
-    dict_rta["Peso Total"]=peso
-    dict_rta["Precio Total"]=precio
-    dict_rta["lista artworks"]=obrasPorDepartamento
-    return dict_rta
+    lt.addLast(listaR, peso)
+    lt.addLast(listaR, round(precio,3))
+    lt.addLast(listaR, obrasPorDepartamento)
+    return listaR
 
 def cmpArtworkPorPrecio(Artwork1,Artwork2):
     precio1=Artwork1["precio"]

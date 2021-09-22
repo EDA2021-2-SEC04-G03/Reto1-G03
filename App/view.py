@@ -216,10 +216,10 @@ while True:
     elif int(inputs[0])==6:
         start_time = time.process_time()
         departamento= input("Por favor ingrese el nombre del departamento:") 
-        dict_rta= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog,departamento)
-        peso_total= dict_rta["Peso Total"]
-        precio_total=dict_rta["Precio Total"]
-        listaConDeptos= dict_rta["lista artworks"]
+        respuesta= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog,departamento)
+        peso_total= lt.getElement(respuesta,1)
+        precio_total=lt.getElement(respuesta,2)
+        listaConDeptos=lt.getElement(respuesta,3)
         print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ str(lt.size(listaConDeptos)))
         print ("El estimado en USD del precio de servicio es de "+str(precio_total))
         print("El peso estimado de las obras es de "+ str(peso_total))
