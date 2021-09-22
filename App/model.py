@@ -136,7 +136,7 @@ def ObrasPorArtistaPorTecnica(catalogo,nombre):
         if nombre == artista["DisplayName"]:
             obrasArtista= artista["Artworks"]
             Tecnicas={}
-            if lt.size(obrasArtista)> 0: 
+            if lt.isEmpty(obrasArtista)==False: 
                 for obra in lt.iterator(obrasArtista):
                     tecnica= obra["Medium"]
                     if tecnica != "":
