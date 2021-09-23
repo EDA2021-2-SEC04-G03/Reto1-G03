@@ -167,16 +167,8 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         start_time = time.process_time()
-        estructura= input('Seleccione una opción:\n 1.ARRAY_LIST\n 2.LINKED_LIST\n')
-        if int(estructura)== 1:
-            estructura="ARRAY_LIST"
-        elif int(estructura)== 2:
-            estructura="LINKED_LIST"
-        else:
-            print("No es una opciòn")
-            sys.exit(0)
         print("Cargando información de los archivos ....")
-        catalog = initCatalog(estructura)
+        catalog = initCatalog()
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))

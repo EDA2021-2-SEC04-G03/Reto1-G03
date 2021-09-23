@@ -41,8 +41,8 @@ import operator
 
 
 # Construccion de modelos
-def newCatalog(estructura):
-
+def newCatalog():
+    estructura= "ARRAY_LIST"
     catalog = {'obras': None,
                'artistas': None,
                }
