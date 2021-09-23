@@ -91,6 +91,7 @@ def addObra(catalog, obra):
     artwork["Length (cm)"]= obra["Length (cm)"]
     artwork["Weight (kg)"]= obra["Weight (kg)"]
     artwork["Width (cm)"]= obra["Width (cm)"]
+    artwork["Classification"]= obra["Classification"]
     artwork["Seat Height (cm)"]= obra["Seat Height (cm)"]
     artwork["Artists"]= lt.newList("ARRAY_LIST",cmpfunction=compareArtistId)
     """en obras los artistas estan como constituente id, en un formato [,] separado por comas, 
@@ -195,7 +196,23 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     date1 = datetime.strptime(fecha1, "%Y-%m-%d")
     date2 = datetime.strptime(fecha2, "%Y-%m-%d")
     return date1<date2
- 
+def cmpArtworkByDate(artwork1, artwork2):
+    fecha1= (artwork1['Date'])
+    fecha2=(artwork2['Date'])
+    temp=False
+    if fecha1=="" and fecha2 =="":
+        temp= False
+    elif fecha1=="" and fecha2 !="":
+        temp= False
+    elif fecha2=="" and fecha1 !="":
+        temp= True
+    else:
+        temp= int(fecha1)<int(fecha2)
+    return temp
+def cmpArtworktByPrice(obra1, obra2):
+    precio1= float(obra1["precio"])
+    precio2=float(obra2["precio"])
+    return precio1<precio2
 
 # Funciones de ordenamiento
 def sortArtistInDateRange(catalog, date1,date2):
@@ -228,8 +245,15 @@ def sortArtworksandRange(lista,inicial,final):
                     purchased+=1
     lista_ordenada= ins.sort(listaEnRango,cmpArtworkByDateAcquired)
     return (lista_ordenada,purchased)
+def sortArtworksByDate(lista):
+    lista_ordenada= lista.copy()
+    lista_ordenada= me.sort(lista_ordenada,cmpArtworkByDate)
+    return lista_ordenada
 
-   
+def sortArtworksByPrice(listaog):
+    lista= listaog.copy()
+    me.sort(lista,cmpArtworktByPrice)
+    return lista
 def RankingCountriesByArtworks (catalog,obras):
     #req4
     lista_artistas=catalog["artistas"]
@@ -299,9 +323,7 @@ def cmpArtworkPorPrecio(Artwork1,Artwork2):
     precio2=Artwork2["precio"]
     return precio1< precio2
     
-def OrdenarPorPrecio(dict_rta):
-    lista=dict_rta["lista artworks"]
-    return me.sort(lista,cmpArtworkPorPrecio)
+
 
 
 

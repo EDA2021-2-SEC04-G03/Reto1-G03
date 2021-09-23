@@ -60,10 +60,12 @@ def loadObras(catalog):
 
 def sortArtworksandRange(lista,inicial,final):
     return model.sortArtworksandRange(lista,inicial,final)
-
 def sortArtistInDateRange(catalog, date1,date2):
     return model.sortArtistInDateRange(catalog, date1,date2)
-
+def sortArtworksByDate(lista):
+    return model.sortArtworksByDate(lista)
+def sortArtworksByPrice(lista):
+    return model.sortArtworksByPrice(lista)
 def RankingCountriesByArtworks(catalog,obras):
     return model.RankingCountriesByArtworks(catalog,obras)
 # Funciones de consulta sobre el catálogo

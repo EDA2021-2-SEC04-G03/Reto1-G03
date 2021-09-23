@@ -66,7 +66,7 @@ def printartists(artistas, incluirObras):
     size = lt.size(artistas)
     if size:
         for artista in lt.iterator(artistas):
-            print("____________________________________________---")
+            print("--------------")
             print(' Nombre: ' +artista["DisplayName"] + ' Fecha de inicio: '+ 
                     artista["BeginDate"]+' Fecha fin: '+ artista["EndDate"]+
                   ' Nacionalidad: '+ artista["Nationality"]+ ' Género: '+artista["Gender"])
@@ -84,8 +84,9 @@ def printobras(obras,incluir):
     size = lt.size(obras)
     if size:
         for obra in lt.iterator(obras):
-            print("--------------------------------------------")
-            print( ' Título: ' + obra["Title"] + ' Fecha: ' + obra["DateAcquired"] +
+            print("--------------")
+            print( ' Título: ' + obra["Title"] + ' Fecha Adquisión: ' + obra["DateAcquired"] +
+            " Fecha de la obra: "+ obra["Date"]+ " Clasificación: " + obra["Classification"]+
              ' Medio: ' + obra["Medium"] + ' Dimensiones: ' + obra["Dimensions"])
             if incluir:
                 artistas=obra["Artists"]
@@ -118,15 +119,21 @@ def printPrimerosyUltimosobras(lista):
     elif lt.size(lista)<=3:
             print("Como solo hay 3 o menos obras, estas son:")
             printobras(lista,True)
-def printUltimos5obras(lista,tipo):
+def print5obrasMasAntiguas(lista):
     if lt.size(lista)>5:
-            ultimos= lt.subList(lista,lt.size(lista)-4,5)
-            print("Obras más "+str(tipo))
+            ultimos= lt.subList(lista,1,5)
             printobras(ultimos,True)
     elif lt.size(lista)<=5:
             print("Como solo hay 5 o menos obras, estos son:")
             printobras(lista,True)
-
+def print5obrasMasCaras(lista):
+    if lt.size(lista)>5:
+            #ultimos= lt.subList(lista,lt.size(lista)-4,5)
+            ultimos= lt.subList(lista,1,5)
+            printobras(ultimos,True)
+    elif lt.size(lista)<=5:
+            print("Como solo hay 5 o menos obras, estos son:")
+            printobras(lista,True)
 """
 Menu principal
 """
@@ -219,10 +226,17 @@ while True:
         respuesta= controller.OrdenarDepartamentoAsignarPrecioyPeso(catalog,departamento)
         peso_total= lt.getElement(respuesta,1)
         precio_total=lt.getElement(respuesta,2)
-        listaConDeptos=lt.getElement(respuesta,3)
-        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ str(lt.size(listaConDeptos)))
+        listaObrasdeDepto=lt.getElement(respuesta,3)
+        listaporprecio= controller.sortArtworksByPrice(listaObrasdeDepto)
+        listaporfecha= controller.sortArtworksByDate(listaObrasdeDepto)
+        print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ str(lt.size(listaObrasdeDepto)))
         print ("El estimado en USD del precio de servicio es de "+str(precio_total))
         print("El peso estimado de las obras es de "+ str(peso_total))
+        print("Las 5 obras mas antiguas a transportar")
+        print5obrasMasAntiguas(listaporfecha)
+        print("Las 5 obras mas caras transportar")
+        print5obrasMasCaras(listaporprecio)
+        stop_time = time.process_time()
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0]) >= 6 :
