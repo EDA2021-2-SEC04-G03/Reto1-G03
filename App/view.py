@@ -158,6 +158,14 @@ def print5obrasMasCaras(lista):
                 count-=1
     elif lt.size(lista)<=5:
             print("Como solo hay 5 o menos obras")
+
+def printTop10(lista):
+            for obra in lt.iterator(lista):
+                print("----------------------------")
+                print( ' Título: ' + obra["Title"] + " Fecha de la obra: "+ obra["Date"]+ 
+                " Clasificación: " + obra["Classification"]+ ' Medio: ' + obra["Medium"] + 
+                ' Dimensiones: ' + obra["Dimensions"]) 
+
 """
 Menu principal
 """
@@ -223,16 +231,14 @@ while True:
         print("Tiempo transcurrido "+ str(timepaso))
     elif int(inputs[0])==5:
         start_time = time.process_time()
+        #nacionalidades=controller.RankingCountriesByArtworks(catalog)
         obras=catalog["obras"]
-        nacionalidades=controller.RankingCountriesByArtworks(catalog,obras)
+        nacionalidades= controller.RankingCountriesByArtworks(catalog)
         print("El top 10 de los países en el MoMa son: ")
-        num=0
-        #for i in nacionalidades:
-            #print(str(i)+ ":"+ str(nacionalidades[i]))
-            #num+=1
-            #if num==10:
-                #break
-        print (nacionalidades)
+        printTop10(nacionalidades) 
+        print(nacionalidades)    
+        
+        
         stop_time = time.process_time()
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))
@@ -246,10 +252,6 @@ while True:
         print("El total de obras en el departamento "+ str(departamento)+ "es de: "+ str(lt.size(listaObrasdeDepto)))
         print ("El estimado en USD del precio de servicio es de "+str(precio_total))
         print("El peso estimado de las obras es de "+ str(peso_total))
-        listaporprecio= controller.sortArtworksByPrice(listaObrasdeDepto)
-        print5obrasMasCaras(listaporprecio)
-        listaporfecha= controller.sortArtworksByDate(listaObrasdeDepto)
-        print5obrasMasAntiguas(listaporfecha)
         stop_time = time.process_time()
         timepaso= stop_time-start_time
         print("Tiempo transcurrido "+ str(timepaso))

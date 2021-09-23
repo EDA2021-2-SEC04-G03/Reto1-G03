@@ -253,19 +253,39 @@ def sortArtworksByPrice(listaog):
     lista= listaog.copy()
     me.sort(lista,cmpArtworktByPrice)
     return lista
-def RankingCountriesByArtworks (catalog,obras):
+
+def cmpfunction_nacionalidades (num1,num2):
+    return num1>num2
+def RankingCountriesByArtworks (catalog):
     #req4
-    lista_artistas=catalog["artistas"]
+    obras=catalog["obras"]
     dict_nacionalidades= {}
-    for i in obras:
-        for n in lt.iterator(lista_artistas):
-            if i in n["Artworks"]:
-                nacionalidad= n["Nationality"]
-                if nacionalidad not in dict_nacionalidades:
-                    dict_nacionalidades[nacionalidad]=1
-                else:
-                    dict_nacionalidades[nacionalidad]+=1
-    return (dict_nacionalidades)
+    for n in lt.iterator(obras):
+        artista= n["Artists"]
+        for nacionalidad in lt.iterator(artista):
+            nationality=nacionalidad["Nationality"]
+            if nationality not in dict_nacionalidades:
+                dict_nacionalidades[nationality]=lt.newList("ARRAY_LIST")
+                lt.addLast(dict_nacionalidades[nationality],1)
+                lt.addLast(dict_nacionalidades[nationality],n)
+                
+                
+            else:
+                element=lt.getElement(dict_nacionalidades[nationality],1)+1
+                lt.changeInfo(dict_nacionalidades[nationality],1,element)
+                lt.addLast(dict_nacionalidades[nationality],n["Title"])
+    num=1
+    lista=lt.newList("ARRAY_LIST")
+    for i in range (10):
+        for key,value in dict_nacionalidades.items():
+            value=lt.getElement(value,1)
+            if value>num:
+                num=value
+                nombre=key
+        lista[nombre]=lt.getElement(dict_nacionalidades[nationality],2)
+        
+
+    return (lista)
 
 
 #Requisito 5#

@@ -66,8 +66,8 @@ def sortArtworksByDate(lista):
     return model.sortArtworksByDate(lista)
 def sortArtworksByPrice(lista):
     return model.sortArtworksByPrice(lista)
-def RankingCountriesByArtworks(catalog,obras):
-    return model.RankingCountriesByArtworks(catalog,obras)
+def RankingCountriesByArtworks(catalog):
+    return model.RankingCountriesByArtworks(catalog)
 # Funciones de consulta sobre el catálogo
 def ObrasPorArtistaPorTecnica(catalogo,nombre):
     return model.ObrasPorArtistaPorTecnica(catalogo,nombre)
@@ -79,5 +79,5 @@ def OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento):
     ObrasPorDepartamento= model.OrdenarDepartamentoAsignarPrecioyPeso(catalogo, departamento)
     return ObrasPorDepartamento 
 def OrdenarPorPrecio(lista):
-    ListaOrdenada= model.OrdenarPorPrecio(lista)
-    return ListaOrdenada 
+    ListaOrdenada= model.sortArtworksByPrice(lista)
+    return ListaOrdenada  
