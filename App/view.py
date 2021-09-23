@@ -49,11 +49,11 @@ def printMenu():
     print("6-Transportar obras de un departamento ")
     print("0-Salir ")
  
-def initCatalog(estructura):
+def initCatalog():
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog(estructura)
+    return controller.initCatalog()
 
 def loadData(catalog):
     """
