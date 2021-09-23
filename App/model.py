@@ -109,7 +109,6 @@ def addObra(catalog, obra):
     al artista se le adiciona la info de la obra a la lista artworks
      y viceversa con los artistas a la obra
     """
-    #TODO pregunta cupi#
     for ID in codigosArtistas:
         ID= int(ID)
         for artista in lt.iterator(catalog["artistas"]):
